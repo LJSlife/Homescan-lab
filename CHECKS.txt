@@ -1,0 +1,18 @@
+HomeScan Lab v1.2 — checks completed 12 October 2026
+
+12 detection regression tests passed using simulated detector outputs:
+brief false positives; three-frame acceptance; oven/microwave label switching;
+same-frame duplicate boxes; distinct simultaneous appliances; saved correction;
+rejection after revisit; conservative quantity; detection threshold and recency;
+two chairs; old saved-room loading; preserving existing track assignments.
+
+The real page controller also passed a simulated DOM/model integration check:
+scan acceptance, one-tap Oven selection, correction retention, quantities,
+save/load, rejected detections and clearing during an unfinished inference.
+
+Service worker simulation checked all required files, cache cleanup and the
+local offline fallback. The ZIP was checked for integrity and complete assets.
+
+A real browser preview could not run because the browser download failed.
+These checks do not establish visual layout or live camera accuracy in Safari.
+Test the installed v1.2 on your iPhone before relying on its inventory.

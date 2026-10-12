@@ -22,11 +22,12 @@
     .camera-wrap{position:relative;overflow:hidden;border-radius:16px;background:#030914;aspect-ratio:4/3;border:1px solid var(--line)}video,canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}canvas{pointer-events:none}.camera-note{position:absolute;left:10px;right:10px;bottom:10px;display:flex;justify-content:space-between;gap:8px;align-items:flex-end}.pill{background:rgba(4,10,18,.76);backdrop-filter:blur(8px);padding:8px 10px;border:1px solid rgba(255,255,255,.12);border-radius:12px;font-size:13px}.status{color:var(--muted);font-size:13px;line-height:1.45}
     .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#0a1627;border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:24px}.stat span{font-size:12px;color:var(--muted)}
     .item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.item-main{flex:1}.item-title{font-weight:700}.item-sub{font-size:12px;color:var(--muted);margin-top:3px}.badge{font-size:12px;background:#0b2130;color:#aeeeff;border:1px solid #204865;padding:4px 7px;border-radius:999px}.qty{display:flex;align-items:center;gap:5px}.qty button{padding:6px 9px;min-width:auto}.empty{color:var(--muted);text-align:center;padding:18px 4px}.hidden{display:none!important}.tiny{font-size:12px;color:var(--muted)}.privacy{display:flex;gap:10px;align-items:flex-start}.privacy .icon{font-size:20px}.footer{font-size:12px;color:var(--muted);text-align:center;padding-top:8px}.notice{background:#102636;border:1px solid #25526d;color:#d7f4ff;border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.4}.error{background:#35171c;border-color:#6b3038;color:#ffd8dc}
+  .item{flex-wrap:wrap}.item-main{min-width:140px}.item-controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap;width:100%}.item-controls button{min-height:40px}.badge.review{background:#332b15;border-color:#6d5627;color:#ffd166}.badge.verified{background:#0d2b22;border-color:#27664f;color:#63e6a2}.correction{font-size:12px;padding:8px 10px!important}.item-title{overflow-wrap:anywhere} .item-sub{line-height:1.5}
   </style>
 </head>
 <body>
 <div class="app">
-  <header><div class="brand">HomeScan Lab</div><div class="tag">Private prototype · €0 · v1.1</div></header>
+  <header><div class="brand">HomeScan Lab</div><div class="tag">Private prototype · €0 · v1.2</div></header>
 
   <section class="card hero">
     <h1>Walk the room. Let the phone remember it.</h1>
@@ -36,7 +37,7 @@
   <section class="card">
     <div class="grid two">
       <div><label for="roomName">Room name</label><input id="roomName" placeholder="e.g. Kitchen" autocomplete="off" /></div>
-      <div><label for="threshold">Detection confidence</label><select id="threshold"><option value="0.45">Exploratory · 45%</option><option value="0.55" selected>Balanced · 55%</option><option value="0.65">Strict · 65%</option><option value="0.75">Very strict · 75%</option></select></div>
+      <div><label for="threshold">Detection confidence</label><select id="threshold"><option value="0.55">Exploratory · 55%</option><option value="0.65" selected>Balanced · 65%</option><option value="0.75">Strict · 75%</option></select></div>
     </div>
   </section>
 
@@ -60,7 +61,7 @@
 
   <section class="card">
     <div class="stats">
-      <div class="stat"><b id="foundCount">0</b><span>item types found</span></div>
+      <div class="stat"><b id="foundCount">0</b><span>inventory entries</span></div>
       <div class="stat"><b id="frameCount">0</b><span>frames analysed</span></div>
       <div class="stat"><b id="scanSeconds">0</b><span>seconds scanning</span></div>
     </div>
@@ -68,8 +69,8 @@
 
   <section class="card">
     <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:4px"><h2 style="margin:0;font-size:20px">Detected inventory</h2><button id="addManual" class="ghost" style="padding:8px 10px">+ Add item</button></div>
-    <div class="tiny" style="margin:5px 0 8px">This model recognises broad object classes, not exact make/model yet. Correct anything it gets wrong — that feedback is part of the experiment.</div>
-    <div id="items"><div class="empty">Nothing detected yet.</div></div>
+    <div class="tiny" style="margin:5px 0 8px">Objects must appear in 3 separate frames before being added. Conflicting labels need your confirmation. Tap Correct to fix a name; your correction stays for this room.</div>
+    <p id="pendingHint" class="tiny" aria-live="polite"></p><div id="items"><div class="empty">Nothing detected yet.</div></div>
     <div class="actions" style="margin-top:10px"><button id="saveRoom" class="primary">Save room locally</button><button id="clearRoom" class="danger">Clear current scan</button></div>
   </section>
 
@@ -88,14 +89,15 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+<script src="detection.js?v=1.2"></script>
 <script>
 (() => {
-  const useful = new Set(['refrigerator','oven','microwave','toaster','tv','laptop','keyboard','mouse','sink','couch','chair','dining table','bed','toilet','clock','book','backpack','suitcase','hair drier']);
-  const nice = {'refrigerator':'Fridge / refrigerator','tv':'Television','couch':'Sofa / couch','dining table':'Dining table','hair drier':'Hair dryer'};
+  const {Tracker,useful,displayName}=HomeScanDetection;
+  const tracker=new Tracker();
   const $ = id => document.getElementById(id);
   const video=$('video'), overlay=$('overlay'), ctx=overlay.getContext('2d');
-  let model=null, stream=null, scanning=false, scanLoop=null, timerLoop=null, startedAt=0, frames=0;
-  let items={};
+  let model=null, stream=null, scanning=false, scanLoop=null, timerLoop=null, startedAt=0, frames=0, elapsed=0, scanEpoch=0, inFlight=false;
+
 
   const isSecure = location.protocol === 'https:' || ['localhost','127.0.0.1'].includes(location.hostname);
   if(!isSecure){ const n=$('secureNotice'); n.classList.remove('hidden'); n.classList.add('error'); n.textContent='Camera access needs HTTPS. Upload this folder to a free HTTPS host such as GitHub Pages before testing on iPhone.'; }
@@ -133,6 +135,7 @@
   loadModel();
 
   async function startCamera(){
+    stopScan(); tracker.resetView();
     try{
       if(stream) stream.getTracks().forEach(t=>t.stop());
       stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false});
@@ -147,77 +150,100 @@
   }
   window.addEventListener('resize', resizeCanvas);
 
-  function displayName(label){ return nice[label] || label.replace(/\b\w/g,c=>c.toUpperCase()); }
   function renderItems(){
-    const root=$('items'); const keys=Object.keys(items).sort(); $('foundCount').textContent=keys.length;
-    if(!keys.length){ root.innerHTML='<div class="empty">Nothing detected yet.</div>'; return; }
+    const root=$('items'); const list=tracker.inventory().slice().sort((a,b)=>a.name.localeCompare(b.name));
+    $('foundCount').textContent=list.length;
+    const pending=tracker.pending();
+    $('pendingHint').textContent=pending ? `${pending} possible object${pending===1?'':'s'} still being checked — not in the inventory.` : 'Review detections before saving. A high score can still be wrong.';
+    if(!list.length){ root.innerHTML='<div class="empty">No repeated detections yet. Hold the camera steady on each object.</div>'; return; }
     root.innerHTML='';
-    keys.forEach(key=>{
-      const it=items[key]; const row=document.createElement('div'); row.className='item';
-      row.innerHTML=`<div class="item-main"><div class="item-title">${escapeHtml(it.name)}</div><div class="item-sub">Best confidence ${Math.round(it.conf*100)}% · seen ${it.seen} times</div></div><span class="badge">${it.source}</span><div class="qty"><button class="ghost" data-act="minus">−</button><b>${it.qty}</b><button class="ghost" data-act="plus">+</button></div><button class="danger" data-act="del" style="padding:7px 9px">×</button>`;
-      row.querySelector('[data-act="minus"]').onclick=()=>{it.qty=Math.max(1,it.qty-1);renderItems()};
-      row.querySelector('[data-act="plus"]').onclick=()=>{it.qty++;renderItems()};
-      row.querySelector('[data-act="del"]').onclick=()=>{delete items[key];renderItems()};
-      row.querySelector('.item-title').onclick=()=>{const n=prompt('Rename item',it.name);if(n){it.name=n.trim();renderItems()}};
+    list.forEach(it=>{
+      const row=document.createElement('div'); row.className='item';
+      const evidence=it.source==='manual' ? 'Added by you' : `Best model score ${Math.round((it.conf||0)*100)}% · observed in ${it.seen} frames`;
+      const labels=Object.keys(it.labels||{});
+      const competing=labels.length>1 ? `<div class="item-sub">Model labels: ${labels.map(x=>escapeHtml(displayName(x))).join(' / ')}</div>` : '';
+      const status=it.status||'detected'; const review=status==='needs confirmation';
+      row.innerHTML=`<div class="item-main"><div class="item-title">${escapeHtml(it.name)}</div><div class="item-sub">${evidence}</div>${competing}</div><span class="badge ${review?'review':it.verified?'verified':''}">${escapeHtml(status)}</span><div class="item-controls"><button class="ghost correction" data-act="edit">${review?'Choose / correct label':'Correct'}</button>${!it.verified&&!review?'<button class="good correction" data-act="verify">Confirm</button>':''}<div class="qty"><button class="ghost" data-act="minus" aria-label="Reduce quantity">−</button><b>${it.qty}</b><button class="ghost" data-act="plus" aria-label="Increase quantity">+</button></div><button class="danger" data-act="del" aria-label="Remove item" style="margin-left:auto;padding:7px 12px">×</button></div>`;
+      row.querySelector('[data-act="minus"]').onclick=()=>{tracker.adjust(it.id,-1);renderItems()};
+      row.querySelector('[data-act="plus"]').onclick=()=>{tracker.adjust(it.id,1);renderItems()};
+      row.querySelector('[data-act="del"]').onclick=()=>{tracker.remove(it.id);renderItems()};
+      if(review && labels.length>1) {
+        const controls=row.querySelector('.item-controls');
+        labels.forEach(label=>{const choice=document.createElement('button');choice.className='good correction';choice.textContent=displayName(label);choice.onclick=()=>{tracker.edit(it.id,displayName(label));renderItems()};controls.prepend(choice)});
+      }
+      const correct=()=>{const n=prompt(labels.length>1?'What is this appliance? Enter Oven, Microwave, or its correct name.':'Correct item name',it.name);if(n&&n.trim()){if(n.trim().toLowerCase()==='oven / microwave'){alert('Choose the actual appliance name: Oven, Microwave, or another name.');return;}tracker.edit(it.id,n);renderItems()}};
+      row.querySelector('[data-act="edit"]').onclick=correct;
+      row.querySelector('.item-title').onclick=correct;
+      const verify=row.querySelector('[data-act="verify"]'); if(verify) verify.onclick=()=>{tracker.verify(it.id);renderItems()};
       root.appendChild(row);
     });
   }
   function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 
+  function scheduleAnalysis(){ clearTimeout(scanLoop); if(scanning) scanLoop=setTimeout(analyse,700); }
   async function analyse(){
-    if(!scanning || !model || video.readyState<2) return;
+    if(!scanning || !model) return;
+    if(video.readyState<2 || inFlight){scheduleAnalysis();return;}
+    const epoch=scanEpoch; inFlight=true;
     try{
-      const preds=await model.detect(video,30,Number($('threshold').value)); frames++; $('frameCount').textContent=frames;
-      draw(preds);
-      const perFrame={};
-      preds.filter(p=>useful.has(p.class)).forEach(p=>{ perFrame[p.class]=(perFrame[p.class]||[]); perFrame[p.class].push(p); });
-      Object.entries(perFrame).forEach(([label,arr])=>{
-        const best=Math.max(...arr.map(x=>x.score));
-        if(!items[label]) items[label]={name:displayName(label),qty:arr.length,conf:best,seen:1,source:'camera'};
-        else {items[label].conf=Math.max(items[label].conf,best); items[label].seen++; items[label].qty=Math.max(items[label].qty,arr.length);}
-      });
-      renderItems();
-    }catch(e){console.error(e)}
-    if(scanning) scanLoop=setTimeout(analyse,700);
+      const threshold=Number($('threshold').value);
+      const preds=await model.detect(video,30,threshold);
+      if(!scanning || epoch!==scanEpoch) return;
+      frames++; $('frameCount').textContent=frames;
+      const annotations=tracker.process(preds,video.videoWidth,video.videoHeight,threshold);
+      draw(annotations); renderItems();
+    }catch(e){console.error(e); $('scanHint').textContent='This frame could not be analysed. Scanning will retry.';}
+    finally{inFlight=false;scheduleAnalysis();}
   }
 
   function draw(preds){
     const r=video.getBoundingClientRect(); ctx.clearRect(0,0,r.width,r.height);
-    const sx=r.width/video.videoWidth, sy=r.height/video.videoHeight;
-    preds.filter(p=>useful.has(p.class)).forEach(p=>{
-      const [x,y,w,h]=p.bbox; const X=x*sx,Y=y*sy,W=w*sx,H=h*sy;
-      ctx.lineWidth=3; ctx.strokeStyle='#63e6a2'; ctx.fillStyle='rgba(3,9,20,.78)'; ctx.font='600 13px -apple-system,system-ui';
-      ctx.strokeRect(X,Y,W,H); const text=`${displayName(p.class)} ${Math.round(p.score*100)}%`; const tw=ctx.measureText(text).width+12; ctx.fillRect(X,Math.max(0,Y-24),tw,22); ctx.fillStyle='#ffffff'; ctx.fillText(text,X+6,Math.max(15,Y-8));
+    const scale=Math.max(r.width/video.videoWidth,r.height/video.videoHeight);
+    const ox=(r.width-video.videoWidth*scale)/2, oy=(r.height-video.videoHeight*scale)/2;
+    preds.forEach(p=>{
+      const [x,y,w,h]=p.bbox; const X=x*scale+ox,Y=y*scale+oy,W=w*scale,H=h*scale;
+      ctx.lineWidth=3; ctx.strokeStyle=p.status==='user verified'?'#63e6a2':'#ffd166'; ctx.fillStyle='rgba(3,9,20,.78)'; ctx.font='600 13px -apple-system,system-ui';
+      ctx.strokeRect(X,Y,W,H); const text=`${p.name} · ${p.status}`; const tw=ctx.measureText(text).width+12; ctx.fillRect(X,Math.max(0,Y-24),tw,22); ctx.fillStyle='#ffffff'; ctx.fillText(text,X+6,Math.max(15,Y-8));
     });
   }
 
   function startScan(){
-    if(!model||!stream) return; scanning=true; frames=0; startedAt=Date.now(); $('frameCount').textContent='0'; $('scanSeconds').textContent='0'; $('startScan').disabled=true; $('stopScan').disabled=false; $('cameraState').textContent='Scanning';
+    if(!model||!stream||scanning) return;
+    scanning=true; scanEpoch++; startedAt=Date.now()-elapsed*1000;
+    $('startScan').disabled=true; $('stopScan').disabled=false; $('cameraState').textContent='Scanning';
+    $('scanHint').textContent='Hold each object in view for a few seconds. Check any item marked “needs confirmation”.';
     clearInterval(timerLoop); timerLoop=setInterval(()=>{$('scanSeconds').textContent=Math.floor((Date.now()-startedAt)/1000)},1000); analyse();
   }
-  function stopScan(){ scanning=false; clearTimeout(scanLoop); clearInterval(timerLoop); $('startScan').disabled=!model||!stream; $('stopScan').disabled=true; $('cameraState').textContent='Camera live'; }
+  function stopScan(){
+    if(scanning) elapsed=Math.floor((Date.now()-startedAt)/1000);
+    scanning=false; scanEpoch++; clearTimeout(scanLoop); clearInterval(timerLoop);
+    $('startScan').disabled=!model||!stream; $('stopScan').disabled=true; $('cameraState').textContent=stream?'Camera live':'Camera off';
+    $('scanSeconds').textContent=elapsed;
+  }
 
   function saveRoom(){
     const room=$('roomName').value.trim(); if(!room){alert('Give the room a name first.');return}
-    if(!Object.keys(items).length){alert('No items to save yet.');return}
+    if(!tracker.inventory().length){alert('No items to save yet.');return}
     const db=JSON.parse(localStorage.getItem('homescan.rooms')||'[]');
-    const rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),room,created:new Date().toISOString(),items:Object.values(items)}; db.unshift(rec); localStorage.setItem('homescan.rooms',JSON.stringify(db)); renderSaved();
+    const rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),room,created:new Date().toISOString(),appVersion:'1.2',items:tracker.inventory().map(({lastTick,...item})=>item)}; db.unshift(rec); localStorage.setItem('homescan.rooms',JSON.stringify(db)); renderSaved();
     alert(`${room} saved locally on this device.`);
   }
   function renderSaved(){
     const db=JSON.parse(localStorage.getItem('homescan.rooms')||'[]'); const root=$('savedRooms'); if(!db.length){root.innerHTML='<div class="empty">No rooms saved yet.</div>';return}
     root.innerHTML=''; db.forEach(rec=>{ const d=document.createElement('div'); d.className='item'; const total=rec.items.reduce((a,b)=>a+(b.qty||1),0); d.innerHTML=`<div class="item-main"><div class="item-title">${escapeHtml(rec.room)}</div><div class="item-sub">${total} items · ${new Date(rec.created).toLocaleString()}</div></div><button class="ghost" style="padding:7px 9px">Load</button><button class="danger" style="padding:7px 9px">×</button>`;
-      d.children[1].onclick=()=>{ $('roomName').value=rec.room; items={}; rec.items.forEach((x,i)=>items[(x.name||'item')+'_'+i]={...x,source:x.source||'saved'}); renderItems(); window.scrollTo({top:0,behavior:'smooth'}); };
+      d.children[1].onclick=()=>{ stopScan(); $('roomName').value=rec.room; tracker.load(rec.items); frames=0;elapsed=0;$('frameCount').textContent='0';$('scanSeconds').textContent='0';renderItems();ctx.clearRect(0,0,overlay.width,overlay.height); window.scrollTo({top:0,behavior:'smooth'}); };
       d.children[2].onclick=()=>{ const next=db.filter(x=>x.id!==rec.id); localStorage.setItem('homescan.rooms',JSON.stringify(next)); renderSaved(); };
       root.appendChild(d); });
   }
 
   $('startCamera').onclick=startCamera; $('startScan').onclick=startScan; $('stopScan').onclick=stopScan;
-  $('addManual').onclick=()=>{const n=prompt('Item name');if(n){const k='manual_'+Date.now();items[k]={name:n.trim(),qty:1,conf:1,seen:1,source:'manual'};renderItems()}};
-  $('clearRoom').onclick=()=>{stopScan();items={};frames=0;$('frameCount').textContent='0';$('scanSeconds').textContent='0';renderItems();ctx.clearRect(0,0,overlay.width,overlay.height)};
+  $('addManual').onclick=()=>{const n=prompt('Item name');if(n&&n.trim()){tracker.manual(n);renderItems()}};
+  $('clearRoom').onclick=()=>{stopScan();tracker.reset();frames=0;elapsed=0;$('frameCount').textContent='0';$('scanSeconds').textContent='0';renderItems();ctx.clearRect(0,0,overlay.width,overlay.height)};
   $('saveRoom').onclick=saveRoom;
   $('deleteAll').onclick=()=>{if(confirm('Delete every saved room from this device?')){localStorage.removeItem('homescan.rooms');renderSaved()}};
   $('exportData').onclick=()=>{const data=localStorage.getItem('homescan.rooms')||'[]';const blob=new Blob([data],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='homescan-export.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+  document.addEventListener('visibilitychange',()=>{if(document.hidden) stopScan();});
+  window.addEventListener('pagehide',()=>{stopScan();if(stream) stream.getTracks().forEach(t=>t.stop());});
   renderSaved(); renderItems();
 
   if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }

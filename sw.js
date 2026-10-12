@@ -1,9 +1,33 @@
-const CACHE='homescan-lab-v1';
-const LOCAL=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(LOCAL))));
-self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));
-self.addEventListener('fetch',e=>{
-  e.respondWith(caches.match(e.request).then(hit=>hit||fetch(e.request).then(res=>{
-    const copy=res.clone(); if(e.request.method==='GET') caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{}); return res;
-  }).catch(()=>hit)));
+const CACHE='homescan-lab-v1.2';
+const LOCAL=['./index.html','./detection.js?v=1.2','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
+
+self.addEventListener('install',event=>{
+  self.skipWaiting();
+  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(LOCAL)));
+});
+
+self.addEventListener('activate',event=>{
+  event.waitUntil((async()=>{
+    const keys=await caches.keys();
+    await Promise.all(keys.filter(k=>k!==CACHE && k.startsWith('homescan-lab-')).map(k=>caches.delete(k)));
+    await self.clients.claim();
+  })());
+});
+
+self.addEventListener('fetch',event=>{
+  const req=event.request;
+  if(req.method!=='GET' || new URL(req.url).origin!==self.location.origin) return;
+  // Prefer deployed files, retaining an offline fallback for local assets.
+  event.respondWith((async()=>{
+    try{
+      const res=await fetch(req);
+      if(res.ok) {const cache=await caches.open(CACHE); await cache.put(req,res.clone());}
+      return res;
+    }catch(err){
+      const hit=await caches.match(req);
+      if(hit) return hit;
+      if(req.mode==='navigate') {const page=await caches.match('./index.html'); if(page) return page;}
+      throw err;
+    }
+  })());
 });
