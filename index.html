@@ -26,7 +26,7 @@
 </head>
 <body>
 <div class="app">
-  <header><div class="brand">HomeScan Lab</div><div class="tag">Private prototype · €0</div></header>
+  <header><div class="brand">HomeScan Lab</div><div class="tag">Private prototype · €0 · v1.1</div></header>
 
   <section class="card hero">
     <h1>Walk the room. Let the phone remember it.</h1>
@@ -101,8 +101,34 @@
   if(!isSecure){ const n=$('secureNotice'); n.classList.remove('hidden'); n.classList.add('error'); n.textContent='Camera access needs HTTPS. Upload this folder to a free HTTPS host such as GitHub Pages before testing on iPhone.'; }
 
   async function loadModel(){
-    try{ model = await cocoSsd.load({base:'lite_mobilenet_v2'}); $('modelState').textContent='Vision model ready'; $('startScan').disabled=!stream; }
-    catch(e){ $('modelState').textContent='Model failed to load'; console.error(e); }
+    const state=$('modelState');
+    try{
+      if(typeof tf==='undefined' || typeof cocoSsd==='undefined') throw new Error('Vision libraries did not load');
+      const isiOS=/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+      state.textContent=isiOS?'Preparing iPhone-safe vision…':'Preparing vision model…';
+      // TensorFlow.js WebGL has had iOS Safari reliability issues. For this €0
+      // validation build we favour the CPU backend on iPhone: slower, but far
+      // more useful than a model that fails before scanning starts.
+      const preferred=isiOS?'cpu':'webgl';
+      try{
+        const ok=await tf.setBackend(preferred);
+        if(!ok) throw new Error('Backend unavailable: '+preferred);
+        await tf.ready();
+      }catch(backendErr){
+        console.warn('Preferred backend failed, falling back to CPU', backendErr);
+        await tf.setBackend('cpu');
+        await tf.ready();
+      }
+      state.textContent='Loading vision model…';
+      model=await cocoSsd.load({base:'lite_mobilenet_v2'});
+      state.textContent='Vision model ready · '+tf.getBackend().toUpperCase();
+      $('startScan').disabled=!stream;
+    }catch(e){
+      state.textContent='Model failed to load · tap to retry';
+      state.style.cursor='pointer';
+      state.onclick=()=>{ state.onclick=null; state.style.cursor='default'; loadModel(); };
+      console.error('HomeScan model error',e);
+    }
   }
   loadModel();
 
