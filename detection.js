@@ -16,7 +16,7 @@
   }
   class Tracker {
     constructor() { this.reset(); }
-    reset() { this.tick=0; this.next=0; this.tracks=[]; this.profiles=[]; }
+    reset() { this.tick=0; this.next=0; this.session=Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8); this.tracks=[]; this.profiles=[]; }
     resetView() { this.tracks=[]; }
     inventory() { return this.profiles.filter(p=>!p.rejected); }
     pending() { return this.tracks.filter(t=>this.tick-t.last<=2 && !t.profile).length; }
@@ -63,7 +63,7 @@
           let p=this.profiles.find(p=>p.source!=='manual' && p.family===t.family && !claimed.has(p.id));
           if(p) { p.review=true; }
           else {
-            p={id:'camera_'+t.id,family:t.family,name:'',qty:1,conf:0,seen:0,source:'camera',labels:{},verified:false,review:false,rejected:false};
+            p={id:'camera_'+this.session+'_'+t.id,family:t.family,name:'',qty:1,conf:0,seen:0,source:'camera',labels:{},verified:false,review:false,rejected:false};
             this.profiles.push(p);
           }
           p.seen+=t.hits.length-1;
@@ -81,7 +81,7 @@
           } else p.status=p.review?'needs confirmation':'user verified';
         }
       }
-      return groups.map(g=>({bbox:g.bbox,name:g.track.profile?.name || name(Object.keys(g.labels)[0]),score:Math.max(...Object.values(g.labels)),status:g.track.profile?.status || 'checking'}));
+      return groups.map(g=>({bbox:g.bbox,profileId:g.track.profile?.id,trackId:g.track.id,name:g.track.profile?.name || name(Object.keys(g.labels)[0]),score:Math.max(...Object.values(g.labels)),status:g.track.profile?.status || 'checking'}));
     }
     edit(id,value) {
       const p=this.profiles.find(p=>p.id===id); const clean=String(value||'').trim();
@@ -98,12 +98,12 @@
       this.reset();
       for(const item of items) {
         const label=Object.keys(nice).find(k=>nice[k]===item.name) || String(item.name||'').toLowerCase();
-        const p={...item,id:'saved_'+ ++this.next,name:item.name||'Item',qty:Math.max(1,Number(item.qty)||1),labels:{...(item.labels||{})},seen:Number(item.seen)||0,source:item.source||'saved',rejected:false};
+        const p={...item,id:item.id||'saved_'+ ++this.next,name:item.name||'Item',qty:Math.max(1,Number(item.qty)||1),labels:{...(item.labels||{})},seen:Number(item.seen)||0,source:item.source||'saved',rejected:false};
         p.family=item.family || (useful.has(label)?family(label):null);
         if(!Object.keys(p.labels).length && useful.has(label)) p.labels[label]=Number(item.conf)||0;
-        p.verified=item.verified===true || p.source==='manual';
-        p.review=!p.verified; p.status=p.verified?'user verified':'needs confirmation';
-        delete p.lastTick; this.profiles.push(p);
+        p.verified=item.verified===true;
+        p.review=!p.verified || item.status==='needs confirmation'; p.status=p.verified&&!p.review?'user verified':'needs confirmation';
+        delete p.lastTick; delete p.photoTrackId; this.profiles.push(p);
       }
     }
   }

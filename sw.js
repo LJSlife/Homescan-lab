@@ -1,5 +1,5 @@
-const CACHE='homescan-lab-v1.3';
-const LOCAL=['./index.html','./detection.js?v=1.3','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
+const CACHE='homescan-lab-v2.0';
+const LOCAL=['./index.html','./styles.css?v=2.0','./core.js?v=2.0','./app.js?v=2.0','./detection.js?v=2.0','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install',event=>{
   self.skipWaiting();

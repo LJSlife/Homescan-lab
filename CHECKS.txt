@@ -1,13 +1,37 @@
-HomeScan v1.3 — checks completed 12 October 2026
+HomeScan 2.0 — verification completed 12 October 2026
 
-12 detection regression tests passed. The page controller also passed simulated
-DOM/model checks for scan acceptance, the Oven correction button, retaining
-corrections, quantities, saving and reopening, rejecting removed items, and
-clearing a room during an unfinished detection, and readable room-list downloads. Statistics and confidence
-controls are no longer present in the interface.
-Service-worker simulation passed for complete assets and offline file fallback.
-The ZIP was checked for integrity; all referenced local assets are included.
+27 automated core/detection tests passed:
+- Complete backup/restore with item photos, label photos, metadata and PDFs.
+- Legacy migration, stable IDs, search, safe links/images and escaped reports.
+- Duplicate-item merge, backup conflict preservation, timestamp-only deduplication.
+- Date/quantity validation and sequential IndexedDB writes including failure.
+- Transient filtering, appliance label reconciliation, owner corrections,
+  rejection, co-visible objects and conservative camera revisits.
 
-These were simulated checks. A real browser preview is unavailable in this
-runtime because the browser download failed. Visual layout and live camera
-behaviour still need checking on the actual iPhone/Safari installation.
+Actual Chromium 131 browser tests passed:
+- Multi-property creation and room creation.
+- Photo and product-label upload, PDF receipt attachment, metadata and dates.
+- Manual-search popup uses brand/model values currently entered in the form.
+- Saved manual link, edit cancellation and search by serial number.
+- Save/reopen retains photos/documents; repeated saves update the same room.
+- Complete backup download and photo report download.
+- Visual duplicate merge, remove/undo and unfinished-room recovery after reload.
+- Restore without replacing existing data; restore in a fresh browser.
+- Migration of old localStorage records without deleting the original data.
+- Missing-photo confirmation disabled and invalid backup leaves records intact.
+- Layout checks at 320, 390 and 768 px without horizontal overflow.
+- Offline app reopening and item access after service-worker installation.
+
+Browser camera-pipeline tests passed using a real synthetic canvas/video stream
+and controlled model outputs: actual JPEG cropping from the analysed frame,
+conflicting appliance labels, correction retention, save/reopen/photo enlargement,
+and cancellation of a late inference after scanning stops.
+
+Home, room, item and scan-review screenshots were visually inspected internally.
+All JavaScript syntax checks and ZIP integrity/local-asset checks passed.
+
+Boundaries: this is browser validation, not a physical iPhone/Safari camera trial.
+Controlled detector outputs test integration; they do not measure real-world
+recognition accuracy. No accuracy statistic is claimed. External manufacturer
+links were checked against official pages; actual model-specific manual matches
+still require the recorded model to match the selected document.
