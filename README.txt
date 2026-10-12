@@ -1,11 +1,11 @@
-HomeScan 2.1 — Your home, remembered
+HomeScan 2.3 — Your home, remembered
 
 INSTALL ON YOUR EXISTING GITHUB PAGES SITE
-Extract this ZIP. Upload these ELEVEN app files into the repository folder that
+Extract this ZIP. Upload these TWELVE app files into the repository folder that
 currently contains your HomeScan index.html. Replace matching files:
-index.html, styles.css, core.js, app.js, detection.js, labels.js, experience.js, sw.js,
+index.html, styles.css, core.js, app.js, detection.js, labels.js, experience.js, memories.js, sw.js,
 manifest.webmanifest, icon-192.png, icon-512.png.
-Refresh your existing website. The footer should show HomeScan · 2.1.
+Refresh your existing website. The footer should show HomeScan · 2.3.
 If an old page remains, close HomeScan and reopen the website in Safari.
 No build command, account, paid service or server is needed.
 
@@ -16,7 +16,7 @@ Use the same GitHub Pages address to keep access to those old records.
 START USING YOUR HOUSEHOLD RECORD
 Home: start a room, continue a draft, or see care notes that are due.
 Rooms: choose a property and open its room records.
-Find an item: search by room, item, brand, model, serial number or notes.
+Search: search by room, item, brand, model, serial number or notes.
 More: manage properties, find manufacturer portals, download a complete
 backup, restore a backup, and download a photo report.
 
@@ -82,3 +82,39 @@ room cards provide a livelier starting point. Buttons respond to taps; newly
 found items and saved records have soft sound cues. Toggle sound in the header,
 or use More to adjust sound and animation. Animation follows your device
 settings by default, including reduced motion. Browser sound permissions apply.
+
+EASIER ENTRY IN 2.3
+Choose room/item names from recorded values or common household choices.
+Choose a brand and models previously recorded for that brand. Something else
+lets you enter a custom value. Search also offers recorded item names.
+Use details from a product already recorded copies its name, brand, model and
+information links; photos, serial numbers, receipts and dates remain separate.
+Prompts guide you towards an item name, photo and optional label scan.
+Sound now includes ordinary taps and selections, with automatic resume after
+an audio interruption. Mute still applies to every cue.
+
+FAMILY MEMORIES
+Open Memories to add several original photos/videos together. Choose an album
+or occasion, enter the date, people and a caption. Those details apply to the
+selected batch; open any moment to edit it individually. Dates and people are
+entered by you, not inferred from faces or the photo. Original files are stored
+without resizing; up to 100 MB each and 250 MB per import batch. Available
+browser storage may be lower. Keep the originals in your phone's Photos app.
+
+Search memories by caption, title, album, person, date or filename. The main
+Search search also finds memories. Select one or more moments and tap
+Share selected. The phone's share menu offers available compatible apps, then
+you choose the recipient/audience. HomeScan does not post automatically or
+verify delivery. Some apps accept fewer files or formats; download originals
+as a fallback. HEIC/MOV and other formats may not preview in every browser.
+
+Back up memories downloads a .hsm file containing original media and metadata.
+Restore memories verifies its media checksums before importing anything.
+Existing memories are kept; identical records are skipped and changed records
+are retained as copies. Remove selected has an immediate Undo action.
+
+There are TWO backups: the existing home-records JSON and the new memories
+.hsm file. Keep both outside this browser. Family memories stay on this device;
+there is no cloud backup, family-account access or cross-device synchronisation
+in this build. Clearing website data can remove them. This local app must not
+be used as your only copy of important memories.

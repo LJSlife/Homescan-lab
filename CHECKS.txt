@@ -1,4 +1,4 @@
-HomeScan 2.1 — verification completed 12 October 2026
+HomeScan 2.3 — verification completed 12 October 2026
 
 27 automated core/detection tests passed:
 - Complete backup/restore with item photos, label photos, metadata and PDFs.
@@ -51,3 +51,21 @@ Experience checks:
 - Sound on creates audio notes after a user gesture; off suppresses notes.
 - Device reduced-motion preference disables decorative motion; overrides persist.
 - Home and More layouts checked at 320, 390 and 768 px.
+
+2.3 checks: browser journeys cover normal-action audio, suspended-context
+resume, mute and persisted preferences; saved/common/custom dropdowns; model
+filtering; product reuse with serial/photo protection; saving and phone layouts.
+The real OCR browser regression also passes. Physical Safari sound still needs
+confirmation on the owner's device; an interrupted state is handled in code.
+
+2.3 family memories checks:
+- Real browser batch import of two PNG originals and a playable WebM video.
+- Metadata, albums, search by caption/person and shared search; edit persistence.
+- Multi-file share payload retains original files/types; cancel and unavailable
+  share fallback handled. Native phone share sheet is stubbed in tests.
+- Delete/undo, damaged-backup rejection without partial import, idempotent restore.
+- Fresh-browser restore verifies original photo/video bytes with SHA-256.
+- Offline gallery after app caching; 320/390/768 px layouts without overflow.
+- No cloud sync, recipient delivery or real iPhone validation is claimed.
+- Simulated memories storage failure retains the import form, shows failure,
+  enables retry and leaves saved memories unchanged.

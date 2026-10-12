@@ -1,4 +1,4 @@
-# HomeScan 2.1: the household app
+# HomeScan 2.3: the household app
 
 ## Product structure
 
@@ -7,7 +7,7 @@ contain rooms; rooms contain photographed items. Each item can hold its
 identity, useful documents and information links. The scanner is one capture
 method, alongside taking or choosing a photo.
 
-The four main destinations are Home, Rooms, Find an item and More. The room
+The four main destinations are Home, Rooms, Search and More. The room
 workspace separates scanning from checking. Item details are split into Item,
 Manuals & care, and Documents. Photo evidence comes before confirmation.
 
@@ -109,3 +109,45 @@ Validation uses the real browser OCR engine with generated Samsung, LG, Bosch
 and Sony test labels, plus blank and ambiguous-character cases. These tests
 exercise extraction, preservation, storage and failure behaviour. Physical
 phone photographs and Safari memory/performance still need device validation.
+
+
+## Easier entry and sound correction (2.3)
+
+The owner's feedback was that sound was heard only at its toggle and that
+existing data should be offered in dropdowns. Ordinary button/selection cues
+are now wired into the UI. Tone playback waits for audio readiness and resumes
+suspended or interrupted contexts, including after returning to the page.
+
+Native selectors offer saved/common room and item names, saved/known brands,
+and recorded models filtered by brand (or item name when brand is absent).
+Custom values remain possible. An explicit product selector reuses shareable
+model details and information links, protecting the physical item's photo,
+serial, documents and dates. Conflicting existing product details require a
+choice before replacement. Contextual prompts explain the next useful action.
+
+
+## Family memories (2.3)
+
+A fifth main destination adds everyday photos/videos and occasion albums. Home
+has a direct entry; shared search includes home records and memories. Metadata
+entry uses saved/common occasions and optional free text. Selection supports
+one or many media files. Opening a moment allows preview and individual edits.
+
+Original media Blobs are stored separately from home records in IndexedDB.
+Sharing prepares Files synchronously from loaded Blobs and calls Web Share
+from the click gesture, preserving transient activation. canShare checks the
+whole payload; unavailable sharing offers original downloads. OS share targets
+and recipient selection belong to the phone, not a hardcoded platform list.
+
+The .hsm backup stores a manifest followed by original bytes. Restore checks
+lengths, types, file sizes and SHA-256 hashes before a single atomic import.
+Identical records are skipped; changed ID conflicts receive new IDs. Home JSON
+backups remain backwards compatible and separate, with clear copy explaining
+that both are needed. No family login, cloud backup or shared family workspace
+is claimed. The local app is a useful capture/search/share implementation,
+not the sole long-term vault for irreplaceable family media.
+
+Browser testing validates media persistence and byte-for-byte backup recovery,
+search, editing, playback, sharing payloads and fallbacks. The native share menu
+is simulated in tests; recipient delivery and physical iPhone behaviour remain
+external validation. File-format playback depends on device/browser support.
