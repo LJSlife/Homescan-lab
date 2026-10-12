@@ -1,4 +1,4 @@
-HomeScan 2.0 — verification completed 12 October 2026
+HomeScan 2.1 — verification completed 12 October 2026
 
 27 automated core/detection tests passed:
 - Complete backup/restore with item photos, label photos, metadata and PDFs.
@@ -35,3 +35,19 @@ Controlled detector outputs test integration; they do not measure real-world
 recognition accuracy. No accuracy statistic is claimed. External manufacturer
 links were checked against official pages; actual model-specific manual matches
 still require the recorded model to match the selected document.
+
+
+Label reader checks:
+- 11 parser/application safety tests: leading zeros, punctuation, multi-line
+  fields, ambiguous candidates, blank/low-quality text and owner-edit protection.
+- Real Chromium Tesseract worker/WASM reads generated Samsung, LG, Bosch and
+  Sony label images. Exact clear-fixture IDs checked; Samsung auto-fill survives
+  Save details and reopening. Blank input invents no details.
+- Ambiguous 0/O fixture produces a review warning; exact serial not certified.
+- These are generated test plates, not physical household photographs.
+
+Experience checks:
+- Header and More sound controls agree and persist across reload.
+- Sound on creates audio notes after a user gesture; off suppresses notes.
+- Device reduced-motion preference disables decorative motion; overrides persist.
+- Home and More layouts checked at 320, 390 and 768 px.

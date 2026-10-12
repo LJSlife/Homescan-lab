@@ -1,4 +1,4 @@
-# HomeScan 2.0: the household app
+# HomeScan 2.1: the household app
 
 ## Product structure
 
@@ -17,7 +17,8 @@ Manuals & care, and Documents. Photo evidence comes before confirmation.
 2. Scan, or create an item with a photo. Missing detections have a usable fallback.
 3. Inspect the photographed object. Confirm, edit, remove/undo or merge duplicate
    entries. The chosen duplicate photo stays; quantities are not blindly summed.
-4. Record brand/model/serial details and photograph the label when useful.
+4. Photograph the product label; automatically extract brand/model/serial.
+   Compare filled values with the photo; existing owner edits are protected.
 5. Access manual and care searches using the current exact-model values. Save
    links or attach the actual PDF/receipt/warranty document.
 6. Record purchase/warranty/care dates and notes. Due care notes appear on Home.
@@ -51,7 +52,7 @@ local PDFs provide repeat access. Source pages:
 
 Links were checked 12 October 2026. A search result or portal does not prove a
 manual matches an appliance; match its model. The app does not invent product
-specifications, read labels automatically, verify warranty cover, or supply
+specifications, verify warranty cover, or supply
 unsupported maintenance instructions. Care dates are in-app notes, not push
 notifications. Local photos/records are not sent to an AI chat API.
 
@@ -75,7 +76,36 @@ merging make the record usable without assuming detector outputs are facts.
 Recognition quality still needs a representative real-room benchmark. The
 browser tests do not constitute a physical iPhone/Safari hardware trial.
 
-A larger future service can add automatic label extraction, authenticated manual
+A larger future service can add authenticated manual
 retrieval, cross-device sync and notifications. They are not claimed as features
 of this local build. They need their own source, privacy, cost and reliability
 work rather than cosmetic placeholders.
+
+
+## Owner feedback applied
+
+The audience is ordinary homeowners and landlords. No engineering dashboard,
+confidence percentages or statistical panels are needed in the household flow.
+Photographs must make confirmation meaningful. Label reading must reduce typing,
+and useful information must remain accessible from an item record.
+
+The owner also asked for flair, animation and sound. This build adds a richer
+violet/ink and warm-accent palette, an animated home illustration, photo-led
+room cards, responsive taps, entry transitions and brief capture/save sounds.
+Sound has an always-visible control. Motion follows device settings by default
+and can be reduced explicitly. Scan decoration appears only during scanning.
+
+## Automatic label reading
+
+Tesseract reads label photos locally in the browser. Field parsing retains
+punctuation and leading zeros; ambiguous candidates are left for review.
+Existing values and edits made during reading are protected. A differing label
+value is offered as a choice. Model/serial text with easily confused characters
+is flagged for checking. Raw read text and the original photo stay with the
+item and its backup. Poor photos, unfamiliar formats and ambiguous print remain
+real limitations; this is not a guarantee of correct identity.
+
+Validation uses the real browser OCR engine with generated Samsung, LG, Bosch
+and Sony test labels, plus blank and ambiguous-character cases. These tests
+exercise extraction, preservation, storage and failure behaviour. Physical
+phone photographs and Safari memory/performance still need device validation.
