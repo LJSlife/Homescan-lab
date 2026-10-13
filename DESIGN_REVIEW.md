@@ -1,3 +1,7 @@
+# HomeScan 2.8.0 save-integrity update
+
+Items are now persisted to their room at item-save time and during room autosave. Documents provide direct camera photo, enhanced document scan, and file/PDF selection.
+
 # HomeScan 2.7.0: the household app
 
 ## Product structure

@@ -1,3 +1,24 @@
+HomeScan 2.8.0 — save-integrity and documents update 13 October 2026
+
+2.8.0 corrections:
+- Save item now commits the item to the room immediately instead of leaving it only in a room draft.
+- Working-room changes are mirrored into the saved room and persisted automatically.
+- The room toolbar now says Done; saving an item no longer depends on a second hidden Save room step.
+- Startup reconciliation restores a newer older HomeScan draft into its matching saved room.
+- Backgrounding the app snapshots the current room before the storage write.
+- Documents now expose Take document photo, Scan document, and Choose PDF or image.
+- Scan document creates an enhanced high-contrast JPEG for readability.
+
+Verification performed for 2.8.0:
+- Every supplied JavaScript file passes Node syntax checking.
+- Chromium UI test using the production HomeScan scripts saved an Electrolux fridge to Kitchen and immediately found it in Search without pressing Done.
+- The same test confirmed the persisted household snapshot already contained Kitchen -> Fridge -> Electrolux after Save item.
+- Draft-recovery tests covered: newer draft for an existing room, a draft with no roomId matched to Kitchen, and a draft with no existing room promoted to a saved room.
+- Documents UI was checked at 320, 390 and 768 px with no dialog horizontal overflow.
+- A generated receipt image was captured through Scan document, converted to JPEG, displayed in Documents, and persisted with the item.
+- Camera inputs expose environment capture for Take document photo and Scan document; the file picker accepts PDF/images.
+- These browser checks used an injected test origin because direct localhost/file navigation is blocked in this build environment. Physical iPhone/Safari camera capture and real-device interruption testing remain required.
+
 HomeScan 2.7.1 — verification update 13 October 2026
 
 2.7.1 maintenance correction:

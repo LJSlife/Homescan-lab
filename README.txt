@@ -1,4 +1,18 @@
-HomeScan 2.7.1 — Your home, remembered
+HomeScan 2.8.0 — autosave + document capture update
+
+IMPORTANT SAVE BEHAVIOUR
+Saving an item now writes it immediately into its room record. There is no hidden
+second room-save requirement for an item to appear in Search. Room work also
+auto-saves while you edit. The Done button simply finishes the room session.
+On startup, if a older HomeScan room draft is newer than its saved room, HomeScan restores
+that newer draft into the room before showing the app.
+
+DOCUMENTS
+The Documents tab now offers Take document photo, Scan document, and Choose PDF
+or image. Scan document creates a high-contrast JPEG from the camera capture for
+easier reading; it is not a legal/certified document scan and should be checked.
+
+HomeScan 2.8.0 — Your home, remembered
 
 INSTALL ON YOUR EXISTING GITHUB PAGES SITE
 Extract this ZIP. Upload these TWENTY app files into the repository folder that
