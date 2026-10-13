@@ -1,4 +1,4 @@
-HomeScan 2.6.1 — Activate the Gmail connection
+HomeScan 2.6.2 — Activate the Gmail connection
 
 STATUS
 Normal Email screens now show a clear activation-pending state and simple
@@ -84,15 +84,19 @@ sending. There is no outbound attachment picker in this version. If a send's
 response is lost, the app blocks another send of that draft: check Gmail Sent
 before starting a new email. Confirmed send clears the local draft.
 
-Access tokens stay in memory, expire and are not backed up. Disconnect stops
-local API access, retaining saved files/drafts. To revoke Google's underlying
-grant, use https://myaccount.google.com/connections. Reconnect after a reload or
-expiry. This version checks while the app is open, not in the background.
-Attachments/drafts on a shared device are not protected by an app login. Use
-your own device/account. No server, cloud attachment backup or cross-device
-email draft sync is provided. Inbox text is fetched from Google, not sent to
-an AI summarisation provider. The Google API permissions remain account-wide;
-filtering limits what this app fetches, not the permissions Google grants.
+Access tokens stay in memory, expire and are not backed up. HomeScan records only
+that a previously connected account should be resumed. When Email is opened again,
+it asks Google for a fresh short-lived access token using the existing grant and
+saved account hint. If Google can satisfy that request without interaction, the
+connection is restored automatically; otherwise the user taps Reconnect Gmail.
+Explicit Disconnect disables automatic resume while retaining saved files/drafts.
+To revoke Google's underlying grant, use https://myaccount.google.com/connections.
+This version checks while the app is open, not in the background. Attachments/drafts
+on a shared device are not protected by an app login. Use your own device/account.
+No server, cloud attachment backup or cross-device email draft sync is provided.
+Inbox text is fetched from Google, not sent to an AI summarisation provider. The
+Google API permissions remain account-wide; filtering limits what this app fetches,
+not the permissions Google grants.
 
 PRIMARY DOCUMENTATION
 https://developers.google.com/identity/oauth2/web/guides/use-token-model

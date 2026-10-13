@@ -1,5 +1,5 @@
-const CACHE='homescan-lab-v2.6.1';
-const LOCAL=['./index.html','./styles.css?v=2.6.1','./core.js?v=2.6.1','./catalog.js?v=2.6.1','./focused.js?v=2.6.1','./focused-worker.js?v=2.6.1','./voice.js?v=2.6.1','./labels.js?v=2.6.1','./experience.js?v=2.6.1','./memories.js?v=2.6.1','./email-config.js?v=2.6.1','./email.js?v=2.6.1','./app.js?v=2.6.1','./detection.js?v=2.6.1','./privacy.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
+const CACHE='homescan-lab-v2.6.2';
+const LOCAL=['./index.html','./styles.css?v=2.6.2','./core.js?v=2.6.2','./catalog.js?v=2.6.2','./focused.js?v=2.6.2','./focused-worker.js?v=2.6.2','./voice.js?v=2.6.2','./labels.js?v=2.6.2','./experience.js?v=2.6.2','./memories.js?v=2.6.2','./email-config.js?v=2.6.2','./email.js?v=2.6.2','./app.js?v=2.6.2','./detection.js?v=2.6.2','./privacy.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
