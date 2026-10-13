@@ -1,204 +1,22 @@
-HomeScan 2.9.0 — Add Item first
+HomeScan 3.0.0 — Clear Add Item flow
 
-IMPORTANT SAVE BEHAVIOUR
-Saving an item now writes it immediately into its room record. There is no hidden
-second room-save requirement for an item to appear in Search. Room work also
-auto-saves while you edit. The Done button simply finishes the room session.
-On startup, if a older HomeScan room draft is newer than its saved room, HomeScan restores
-that newer draft into the room before showing the app.
+This build removes the scan/camera-assist workflow from the user-facing item flow.
 
-DOCUMENTS
-The Documents tab now offers Take document photo, Scan document, and Choose PDF
-or image. Scan document creates a high-contrast JPEG from the camera capture for
-easier reading; it is not a legal/certified document scan and should be checked.
+ADD ITEM
+- Tap + Add Item.
+- Only Item name is required.
+- Brand, model, serial, category, quantity and photos are optional.
+- Product-label photos are stored as a visual reference; this release does not claim to read them automatically.
+- Save Item is always visible at the bottom of the item form.
 
-HomeScan 2.9.0 — Your home, remembered
+ITEM SCREEN
+- One clear scrolling form. No setup wizard and no Item setup / Manuals & care / Documents tab bar.
+- Manuals/warranty/care and Documents/notes are optional expandable sections.
+- Item and label photos are optional.
 
-INSTALL ON YOUR EXISTING GITHUB PAGES SITE
-Extract this ZIP. Upload these TWENTY app files into the repository folder that
-currently contains your HomeScan index.html. Replace matching files:
-index.html, styles.css, core.js, app.js, detection.js, labels.js, experience.js, memories.js, catalog.js, focused.js, focused-worker.js, voice.js, email.js, email-config.js, sw.js,
-manifest.webmanifest, icon-192.png, icon-512.png, email-owner.html, privacy.html.
-Refresh your existing website. The footer should show HomeScan · 2.9.0.
-If an old page remains, close HomeScan and reopen the website in Safari.
-Home records need no build command, paid service or server. The optional Email
-section needs your Gmail account and one-time Google Web OAuth setup; read
-EMAIL_SETUP.txt. Gmail is not activated by uploading this ZIP alone.
+ROOM SCREEN
+- Camera Assist has been removed from the room workflow.
+- The room contains a single Items view with + Add Item.
 
-Existing HomeScan room records on the SAME site address and browser are
-imported automatically. Old storage is left intact during that migration.
-Use the same GitHub Pages address to keep access to those old records.
-
-START USING YOUR HOUSEHOLD RECORD
-Home: start a room, continue a draft, or see care notes that are due.
-Rooms: choose a property and open its room records.
-Search: search by room, item, brand, model, serial number or notes.
-More: manage properties, find manufacturer portals, download a complete
-backup, restore a backup, and download a photo report.
-
-IN A ROOM
-Items is the default view. Tap + Add Item and enter the item name first. The
-camera is not required. Camera assist remains available as an optional secondary
-tool for broad room-item suggestions.
-
-ADD ITEM FLOW IN 2.9.0
-Add Item now follows three clear steps:
-  1. Quick add — enter the item name, category and optional brand. Tap Save item
-     immediately if that is all you need. A photo is optional.
-  2. Product details — type model/serial details, or optionally use Read product
-     label. Label readings are suggestions only and are not applied automatically.
-  3. Review — check the record and save it. Unknown values can remain blank.
-A failed camera or label read never blocks saving. Quick Add does not require a
-review step or a photo. HomeScan does not insert
-placeholder values for unknown fields. An unfinished item is written to a local
-recovery record while you work when IndexedDB storage is available.
-
-Open Details & information for the full item record:
-  Item — photo, name, quantity, brand, model, serial and product-label photo.
-  Manuals & care — exact-model lookup, saved links, warranty and care dates.
-  Documents — receipts, PDFs, warranty documents and useful notes.
-Use Same item as when two entries describe one physical object. It retains
-the chosen entry's photo and uses the larger quantity rather than adding both.
-Remove can be undone. Save room updates the existing room when it was reopened.
-A draft is also kept on this device so an interrupted room can be continued.
-
-MANUALS AND INFORMATION
-Read product label is optional. HomeScan attempts to detect the brand, model and
-serial number, then shows the detected values for review. Nothing is written into
-the item fields until you tap Use or Use all detected details. Check similar
-characters such as 0/O or 1/I. Read this label again retries the stored photo.
-Poor or ambiguous readings can always be left blank or entered manually.
-
-Find the manual opens
-an external search using those details. Official Bosch, Samsung and LG portals
-are also provided. Save a matching manual or manufacturer-support link for
-future access, or attach a downloaded PDF to keep it with the item.
-Lookups are external searches, not automatically verified matches. Compare
-the model number. The room detector suggests item categories; the separate label reader extracts
-printed details. Neither guarantees that every reading is correct.
-
-KEEPING A COPY
-Download complete backup includes properties, rooms, photos, label photos,
-documents, notes, dates and the current draft. Restore from a backup imports it
-without overwriting changed existing records. Identical records are not duplicated.
-Download a photo report gives you an HTML document containing room records
-and item photos. Open it in a browser; its Print / Save as PDF control uses
-that browser's printing options. Reports are for reading/sharing; backups are
-for restoring the app. Documents are retained in backups, not embedded in reports.
-
-PRIVACY AND AVAILABILITY
-Records are stored in this browser on this device using IndexedDB. There is
-no cloud sync or account. Clearing website data or losing the phone can remove
-records: keep a complete backup elsewhere. Persistent-storage permission is
-available in More but is controlled by your browser and is not a backup.
-The app and saved records can reopen offline after a successful first load.
-Optional camera assistance and label reading need internet-loaded libraries/models.
-Label reading runs on this device; the photo is not uploaded for reading.
-First-time label reading can take longer while the reading engine downloads. Your own
-photo capture and local documents provide the fallback. External links need
-internet. Room photos and records are not uploaded to an application server.
-
-Camera assist suggests broad categories and can be wrong or miss things. It is
-optional; manually added records do not depend on it. Care dates appear inside HomeScan; this
-version does not send scheduled phone notifications. Warranty dates are the
-ones you enter from your documents, not verified cover.
-
-CHECKS.txt records verification. DESIGN_REVIEW.md describes this build's
-structure, source boundaries and remaining technical limits.
-
-LOOK AND FEEL
-A violet-and-ink home screen, warm accents, illustrated motion and photo-led
-room cards provide a livelier starting point. Buttons respond to taps; newly
-found items and saved records have soft sound cues. Toggle sound in the header,
-or use More to adjust sound and animation. Animation follows your device
-settings by default, including reduced motion. Browser sound permissions apply.
-
-EASIER ENTRY
-Room and item names can still be chosen from recorded values or common household
-choices, with custom text available when needed. Product details from a previously
-recorded model can still be reused from the Product details step; the current
-physical item's photo and serial number remain separate. The 2.7.0 wizard replaces
-the older long item form so the user sees only the fields needed for the current
-step. Sound still includes ordinary taps and selections, with mute applying to
-every cue.
-
-FAMILY MEMORIES
-Open Memories to add several original photos/videos together. Choose an album
-or occasion, enter the date, people and a caption. Those details apply to the
-selected batch; open any moment to edit it individually. Dates and people are
-entered by you, not inferred from faces or the photo. Original files are stored
-without resizing; up to 100 MB each and 250 MB per import batch. Available
-browser storage may be lower. Keep the originals in your phone's Photos app.
-
-Search memories by caption, title, album, person, date or filename. The main
-Search search also finds memories. Select one or more moments and tap
-Share selected. The phone's share menu offers available compatible apps, then
-you choose the recipient/audience. HomeScan does not post automatically or
-verify delivery. Some apps accept fewer files or formats; download originals
-as a fallback. HEIC/MOV and other formats may not preview in every browser.
-
-Back up memories downloads a .hsm file containing original media and metadata.
-Restore memories verifies its media checksums before importing anything.
-Existing memories are kept; identical records are skipped and changed records
-are retained as copies. Remove selected has an immediate Undo action.
-
-For household records there are TWO backups: the existing home-records JSON and the new memories
-.hsm file. Keep both outside this browser. Family memories stay on this device;
-there is no cloud backup, family-account access or cross-device synchronisation
-in this build. Clearing website data can remove them. This local app must not
-be used as your only copy of important memories.
-
-EXPANDED ITEM TYPES AND VOICE (2.4)
-Choose a category such as Jewellery, Electronics, Clothes & footwear, Bedding,
-Beauty, Car & tools, School/university/work or Travel/sport/recreation. Saved
-custom categories are also offered. Item types include rings, necklaces,
-bracelets and earrings. Categories are retained in saved records and backups
-and can be searched in Search.
-
-An item photo is now optional. If a photo is present, Suggest item type can ask
-the lightweight household detector for a broad type such as television or fridge.
-It does not identify brand, model, serial number, authenticity or value. The user
-must accept a suggestion before it changes the item name.
-
-Camera assist is separate from Add Item and remains optional. Its detector runs
-on device after its browser model has loaded. Low-memory devices can ignore the
-camera helper entirely and use manual entry.
-
-Tap Speak beside a name, search or notes field. Allow microphone access if
-requested, speak briefly, check the transcript and tap Use these words. English
-(Ireland) is requested. Existing text is replaced only when you apply the
-transcript. If you typed while listening, replacement asks for confirmation.
-Stop/close cancels listening. Some browsers do not offer speech recognition;
-the app directs you to your phone keyboard microphone instead. Your browser
-may use an online speech service. Check spoken model/serial details carefully.
-
-Choose a category first to narrow the item dropdown to relevant types.
-
-EMAIL (2.7.0)
-Open email from Home or More. Filtered inbox summaries, original-email links,
-searchable saved attachments/backups, recipient dropdowns, account-specific
-local drafts and voice-assisted composing are included. Each send requires
-review. The Gmail connection needs one-time Google registration; see
-EMAIL_SETUP.txt for activation, limits and checks. Summaries select key
-sentences on this device, not AI-generated interpretations. Email attachments
-have their own backup; household/memories backups do not include them.
-
-GMAIL ACTIVATION FLOW (2.7.0)
-Ordinary users see a simple Connect Gmail flow with no developer fields.
-If app registration is absent, the screen clearly says activation is pending.
-The app owner uses email-owner.html once to register the app with Google and
-create the public email-config.js connection file. Upload that configuration
-centrally to GitHub; no individual user enters it. After real registration,
-Connect Gmail opens Google consent and then loads inbox summaries automatically.
-Google sign-in loading/retry, denied access and disconnected states are explained.
-After a successful connection, Email remembers that the account should be resumed.
-On a later visit it asks Google for a fresh short-lived token using the existing
-grant without storing a token in HomeScan. If Google cannot restore the session
-without interaction, the screen falls back to a Reconnect Gmail button. Explicit
-Disconnect disables automatic resume. How to connect offers plain user help.
-privacy.html describes this build's data handling and the remaining public-launch
-requirements.
-The connection file now contains the public Google Web client ID supplied by
-Liam on 13 October 2026. This does not itself prove successful Gmail access.
-Confirm authorised origin, test users, consent scopes and Gmail/People APIs in
-the same Google project. Public verification and real mailbox tests remain pending.
+WHY
+The previous local OCR/recognition experience was not reliable enough to be a primary user feature. HomeScan 3.0.0 favours a fast, predictable manual workflow over uncertain automation. Existing saved data and photos remain compatible.
