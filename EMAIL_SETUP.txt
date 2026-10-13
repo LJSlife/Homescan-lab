@@ -1,8 +1,11 @@
-HomeScan 2.5 — Activate the Gmail connection
+HomeScan 2.6.1 — Activate the Gmail connection
 
 STATUS
-The email code is included; live Gmail remains inactive until a Google Web
-OAuth client ID is configured. ChatGPT's connected Gmail cannot be reused by
+Normal Email screens now show a clear activation-pending state and simple
+connection help. Technical setup is on the separate email-owner.html page.
+The public Google Web client ID supplied by the app owner is now configured.
+Real Gmail access still depends on the project permissions, enabled APIs,
+authorised origin and test-user settings. These require live confirmation. ChatGPT's connected Gmail cannot be reused by
 this website. Do not enter a Google password, client secret or API key into
 HomeScan. A Web client ID is public and safe to include in email-config.js.
 
@@ -22,10 +25,11 @@ ONE-TIME OWNER SETUP
    https://www.googleapis.com/auth/contacts.readonly
    https://www.googleapis.com/auth/contacts.other.readonly
 6. Copy the client ID ending in .apps.googleusercontent.com into clientId in
-   email-config.js and upload the updated file. Alternatively, enter that
-   public client ID under Email > Connection help on each device.
+   email-config.js and upload the updated file. Alternatively,
+   use email-owner.html to generate email-config.js, then upload it to GitHub.
+   Ordinary users are never asked for a client ID.
 7. Open the app in Safari, Open email > Connect Gmail, select your account
-   and grant read permission. Then Check inbox. Sending and contacts request
+   and grant read permission. The inbox loads automatically after connection. Sending and contacts request
    additional permissions only when used. Check Gmail Sent after your first
    explicitly reviewed send. No real email was sent during development.
 

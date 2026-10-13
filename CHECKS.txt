@@ -1,4 +1,4 @@
-HomeScan 2.5 — verification updated 13 October 2026
+HomeScan 2.6.1 — verification updated 13 October 2026
 
 27 automated core/detection tests passed:
 - Complete backup/restore with item photos, label photos, metadata and PDFs.
@@ -52,7 +52,7 @@ Experience checks:
 - Device reduced-motion preference disables decorative motion; overrides persist.
 - Home and More layouts checked at 320, 390 and 768 px.
 
-2.5 checks: browser journeys cover normal-action audio, suspended-context
+2.6.1 checks: browser journeys cover normal-action audio, suspended-context
 resume, mute and persisted preferences; saved/common/custom dropdowns; model
 filtering; product reuse with serial/photo protection; saving and phone layouts.
 The real OCR browser regression also passes. Physical Safari sound still needs
@@ -88,7 +88,7 @@ confirmation on the owner's device; an interrupted state is handled in code.
   software GPU enabled, click/focus failures occurred after inference; no claim of physical
   iPhone graphics/performance validation is made.
 
-2.5 Email checks (13 October 2026):
+2.6.1 Email checks (13 October 2026):
 - Real Chromium UI with controlled Google OAuth/Gmail/People API responses.
 - Default unread/non-social/non-spam query, load-more pagination, original links.
 - MIME body decoding, UTF-8 text and summaries preserving short monetary totals.
@@ -109,3 +109,23 @@ confirmation on the owner's device; an interrupted state is handled in code.
 - Live OAuth client registration, Google consent/verification, real Gmail mobile
   thread routing and physical iPhone voice remain unverified pending activation.
 - Email uses on-device sentence selection, not a cloud AI interpretation.
+
+2.6.1 connection UX checks:
+- No client-ID entry or technical setup in normal Email/help screens.
+- Unregistered build clearly shows activation pending; no false Connect action.
+- Separate owner page rejects invalid ID and downloads a correctly named,
+  public-only email-config.js; no account password/token/secret is collected.
+- Configured connection opens OAuth and loads inbox automatically after consent.
+- GIS load failure gives retry, retry recovery returns Connect Gmail.
+- Existing filtered inbox, contacts, attachments/backups, voice and reviewed-send
+  fixture checks remain part of the same real-browser regression.
+- Google Cloud was unavailable in the remote browser. Actual app registration,
+  live Gmail read/delivery and public verification remain incomplete. UI and
+  fixture tests cannot substitute for those remaining account-owner steps.
+
+2.6.1 public client configuration:
+- Exact supplied public client ID retained in email-config.js; valid JavaScript.
+- App/footer, asset URLs and service-worker cache use 2.6.1.
+- Package contains no client secret, password or Google access token.
+- Live site was still 2.5 with empty client configuration when checked.
+- Real Google consent, People API access and delivery remain to be tested.

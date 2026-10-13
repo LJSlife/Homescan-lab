@@ -1,4 +1,4 @@
-# HomeScan 2.5: the household app
+# HomeScan 2.6.1: the household app
 
 ## Product structure
 
@@ -112,7 +112,7 @@ exercise extraction, preservation, storage and failure behaviour. Physical
 phone photographs and Safari memory/performance still need device validation.
 
 
-## Easier entry and sound correction (2.5)
+## Easier entry and sound correction (2.6.1)
 
 The owner's feedback was that sound was heard only at its toggle and that
 existing data should be offered in dropdowns. Ordinary button/selection cues
@@ -127,7 +127,7 @@ serial, documents and dates. Conflicting existing product details require a
 choice before replacement. Contextual prompts explain the next useful action.
 
 
-## Family memories (2.5)
+## Family memories (2.6.1)
 
 A fifth main destination adds everyday photos/videos and occasion albums. Home
 has a direct entry; shared search includes home records and memories. Metadata
@@ -154,7 +154,7 @@ is simulated in tests; recipient delivery and physical iPhone behaviour remain
 external validation. File-format playback depends on device/browser support.
 
 
-## Broader item capture and voice (2.5)
+## Broader item capture and voice (2.6.1)
 
 A grouped household taxonomy covers jewellery, clothing, personal-care items,
 bedding, electronics, furniture, tools, travel/sport and more. Category is a
@@ -187,7 +187,7 @@ After saving item details, the room opens Check items. Room save controls are
 placed outside the animated content so they stay reachable above navigation.
 Saving shows progress and prevents duplicate actions until the write finishes.
 
-## Email addition (2.5)
+## Email addition (2.6.1)
 
 Email is a separate Gmail-connected area. Three familiar tasks: catch up on
 Inbox, find Attachments, Write. Each summary has an envelope link to the original
@@ -218,3 +218,24 @@ This build's Email tests use simulated OAuth/API responses in a real browser;
 Google registration, real mailbox access/delivery and iPhone link routing remain
 unverified. Summaries are extractive; outgoing file attachments, merged multi-
 mailbox inboxes, send-as aliases, background checking and cloud sync are absent.
+
+## Consumer connection flow repair (2.6.1)
+
+App-owner registration has moved to email-owner.html. Consumer screens never
+ask for OAuth configuration and have explicit unregistered, preparing, ready,
+connected, disconnected, denied and network-retry states. A public client ID is
+configured centrally in email-config.js. Per-user local client-ID entry is no
+longer used. Successful initial consent loads the inbox; sending still requires
+review and an explicit send tap. The owner guide generates the connection file
+but does not claim that its format check validates Google registration.
+
+A real public client ID supplied by Liam is now present in email-config.js. Remote Google Cloud
+access was unavailable, so app registration cannot honestly be marked complete.
+The owner has supplied a Google Web client ID. Remaining Google project settings
+and actual consent, original-link routing and delivery must be tested. Public launch
+requires the applicable Google verification and accurate owner/support details.
+
+## Connection configuration 2.6.1
+The owner-supplied public Web client ID is configured centrally. Asset/cache
+versions were advanced so the deployed app requests this configuration. Real
+Gmail authentication and mailbox operations have not yet been verified.
