@@ -1,22 +1,22 @@
-HomeScan 3.0.0 — Clear Add Item flow
+HomeScan 3.0.1 — deployment-safe clarity reset
 
-This build removes the scan/camera-assist workflow from the user-facing item flow.
+This build deliberately removes the unreliable scan/OCR item flow.
 
-ADD ITEM
-- Tap + Add Item.
-- Only Item name is required.
+WHAT THE USER SEES
+- Room screen: Items + one clear + Add Item button.
+- Add Item: one scrolling form. No Item setup / Manuals & care / Documents tab bar.
+- Item name is the only required field.
 - Brand, model, serial, category, quantity and photos are optional.
-- Product-label photos are stored as a visual reference; this release does not claim to read them automatically.
-- Save Item is always visible at the bottom of the item form.
+- Label photo is a reference photo only. HomeScan does not pretend to read it in this build.
+- One clear Save item button.
 
-ITEM SCREEN
-- One clear scrolling form. No setup wizard and no Item setup / Manuals & care / Documents tab bar.
-- Manuals/warranty/care and Documents/notes are optional expandable sections.
-- Item and label photos are optional.
+DEPLOYMENT
+Replace the files in the existing GitHub Pages HomeScan folder with the contents of this package. Do not upload the ZIP itself as a site file.
 
-ROOM SCREEN
-- Camera Assist has been removed from the room workflow.
-- The room contains a single Items view with + Add Item.
+This build uses new physical UI filenames (app-3.0.1.js and styles-3.0.1.css), unregisters old service workers and clears old caches so the previous wizard cannot be reused accidentally.
 
-WHY
-The previous local OCR/recognition experience was not reliable enough to be a primary user feature. HomeScan 3.0.0 favours a fast, predictable manual workflow over uncertain automation. Existing saved data and photos remain compatible.
+After deployment, opening reset.html once is a belt-and-braces cache reset. It redirects back to the app automatically.
+
+VERIFY
+The footer must say: HomeScan · 3.0.1
+If the top of Add Item shows the old three tabs, the deployed site is still serving older files.

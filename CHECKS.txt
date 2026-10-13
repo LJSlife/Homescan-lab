@@ -1,13 +1,10 @@
-HomeScan 3.0.0 checks
+HomeScan 3.0.1 checks
 
-- JavaScript syntax check passes for app.js.
-- + Add Item is the only primary item-entry action in the room view.
-- Room view no longer renders Camera Assist or scanner controls.
-- Add Item editor is a single form; the three-step wizard and top Item setup / Manuals & care / Documents tabs are not rendered.
-- Item name is the only required field.
-- Save item uses the existing quick-save path and marks the user-entered record as checked.
-- Product-label photo capture no longer triggers OCR automatically.
-- Label photos are retained as visual reference only.
-- Existing manuals, warranty, care, documents and notes remain available as expandable sections.
-- Existing item records remain compatible with the same storage schema.
-- Service-worker cache/version strings bumped to 3.0.0.
+- Critical assets use new physical filenames to prevent stale app.js/styles.css reuse.
+- Old service workers/caches are purged; no new service worker is registered.
+- No OCR/label-reader script is loaded.
+- No user-facing strings remain for Item setup wizard, Read this label again, Possible details found, or Use all detected details.
+- Add Item renders a single form and a single primary Save item action.
+- JavaScript syntax check passed.
+- ZIP integrity test passed.
+- Full Safari interaction still requires device testing.
