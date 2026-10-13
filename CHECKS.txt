@@ -1,3 +1,23 @@
+HomeScan 2.9.0 — Add Item first update 13 October 2026
+
+2.9.0 changes verified in source/tests:
+- New and reopened room work defaults to the Items view; camera assistance is optional.
+- The visible Scan an item action has been removed and replaced with + Add Item.
+- Add Item no longer opens the camera automatically.
+- Step 1 is manual-first: item name/category/optional brand, with photo as an optional secondary action.
+- Step 1 can save immediately; Quick Add does not require the product-details or review steps.
+- Step 2 accepts manual brand/model/serial entry first and offers Read product label as optional assistance.
+- Label-reader results are held as suggestions and are not written into item fields until the user taps Use or Use all detected details.
+- Saving/checking an item no longer requires an item photo.
+- Label photos are retained at a larger 2200 px analysis size with JPEG quality 0.90 before OCR.
+- Sky is included in known manufacturer recognition.
+- A parsed serial consisting only of zeros (for example 000) is rejected rather than treated as a valid serial.
+- Router regression parser fixture detects Sky and serial DE10219A002617; a valid leading-zero serial remains supported.
+- Samsung/model/serial parser regression fixture still passes.
+- Every JavaScript file passes Node syntax checking.
+- Static flow checks confirm Add Item is primary, Scan an item is absent from the UI, camera auto-open is gone, and label readings are not auto-applied.
+- Chromium UI execution could not be re-run in this container because the installed headless Chromium itself did not start even for a trivial data: page. Physical Safari/iPhone validation is still required.
+
 HomeScan 2.8.0 — save-integrity and documents update 13 October 2026
 
 2.8.0 corrections:

@@ -1,4 +1,4 @@
-HomeScan 2.8.0 — autosave + document capture update
+HomeScan 2.9.0 — Add Item first
 
 IMPORTANT SAVE BEHAVIOUR
 Saving an item now writes it immediately into its room record. There is no hidden
@@ -12,14 +12,14 @@ The Documents tab now offers Take document photo, Scan document, and Choose PDF
 or image. Scan document creates a high-contrast JPEG from the camera capture for
 easier reading; it is not a legal/certified document scan and should be checked.
 
-HomeScan 2.8.0 — Your home, remembered
+HomeScan 2.9.0 — Your home, remembered
 
 INSTALL ON YOUR EXISTING GITHUB PAGES SITE
 Extract this ZIP. Upload these TWENTY app files into the repository folder that
 currently contains your HomeScan index.html. Replace matching files:
 index.html, styles.css, core.js, app.js, detection.js, labels.js, experience.js, memories.js, catalog.js, focused.js, focused-worker.js, voice.js, email.js, email-config.js, sw.js,
 manifest.webmanifest, icon-192.png, icon-512.png, email-owner.html, privacy.html.
-Refresh your existing website. The footer should show HomeScan · 2.7.1.
+Refresh your existing website. The footer should show HomeScan · 2.9.0.
 If an old page remains, close HomeScan and reopen the website in Safari.
 Home records need no build command, paid service or server. The optional Email
 section needs your Gmail account and one-time Google Web OAuth setup; read
@@ -37,25 +37,21 @@ More: manage properties, find manufacturer portals, download a complete
 backup, restore a backup, and download a photo report.
 
 IN A ROOM
-Use Scan room for camera suggestions, or add your own item with a photo.
-Use Check items to inspect each photograph and correct names/quantities.
+Items is the default view. Tap + Add Item and enter the item name first. The
+camera is not required. Camera assist remains available as an optional secondary
+tool for broad room-item suggestions.
 
-GUIDED ITEM ENTRY IN 2.7.1
-Scan an item now follows three clear steps:
-  1. Item — take one photo and confirm what the item is.
-  2. Product details — photograph the maker/product label. HomeScan reads the
-     brand, model and serial number into the form where possible.
-  3. Review — check the record and save it.
-For a fridge or freezer, the app tells you where the product label is commonly
-found. The main item photo identifies the object; the product-label photo is the
-one used to read model and serial information. If a reader is slow, you can stop
-it or continue without waiting and finish the fields manually.
-
-The primary Scan an item path no longer starts the roughly 150 MB broader CLIP
-reader. It uses the lighter household-object detector for a quick suggestion,
-then moves to the label step. This reduces memory pressure on phones and avoids
-locking the user into a long recognition task. An unfinished item is also written
-to a local recovery record while you work when IndexedDB storage is available.
+ADD ITEM FLOW IN 2.9.0
+Add Item now follows three clear steps:
+  1. Quick add — enter the item name, category and optional brand. Tap Save item
+     immediately if that is all you need. A photo is optional.
+  2. Product details — type model/serial details, or optionally use Read product
+     label. Label readings are suggestions only and are not applied automatically.
+  3. Review — check the record and save it. Unknown values can remain blank.
+A failed camera or label read never blocks saving. Quick Add does not require a
+review step or a photo. HomeScan does not insert
+placeholder values for unknown fields. An unfinished item is written to a local
+recovery record while you work when IndexedDB storage is available.
 
 Open Details & information for the full item record:
   Item — photo, name, quantity, brand, model, serial and product-label photo.
@@ -67,11 +63,11 @@ Remove can be undone. Save room updates the existing room when it was reopened.
 A draft is also kept on this device so an interrupted room can be continued.
 
 MANUALS AND INFORMATION
-Photograph the product label: HomeScan automatically reads the brand, model
-and serial number into empty fields. Check the result against the label photo,
-especially similar characters such as 0/O or 1/I. Existing details you entered
-are preserved; differing readings are offered for you to choose. Read label again
-retries a stored photo. Poor or ambiguous readings can be corrected by hand.
+Read product label is optional. HomeScan attempts to detect the brand, model and
+serial number, then shows the detected values for review. Nothing is written into
+the item fields until you tap Use or Use all detected details. Check similar
+characters such as 0/O or 1/I. Read this label again retries the stored photo.
+Poor or ambiguous readings can always be left blank or entered manually.
 
 Find the manual opens
 an external search using those details. Official Bosch, Samsung and LG portals
@@ -96,14 +92,14 @@ no cloud sync or account. Clearing website data or losing the phone can remove
 records: keep a complete backup elsewhere. Persistent-storage permission is
 available in More but is controlled by your browser and is not a backup.
 The app and saved records can reopen offline after a successful first load.
-Camera recognition and label reading need internet-loaded libraries/models.
+Optional camera assistance and label reading need internet-loaded libraries/models.
 Label reading runs on this device; the photo is not uploaded for reading.
 First-time label reading can take longer while the reading engine downloads. Your own
 photo capture and local documents provide the fallback. External links need
 internet. Room photos and records are not uploaded to an application server.
 
-The scanner suggests broad categories and can be wrong or miss things. The
-photograph is the evidence to check. Care dates appear inside HomeScan; this
+Camera assist suggests broad categories and can be wrong or miss things. It is
+optional; manually added records do not depend on it. Care dates appear inside HomeScan; this
 version does not send scheduled phone notifications. Warranty dates are the
 ones you enter from your documents, not verified cover.
 
@@ -159,20 +155,14 @@ custom categories are also offered. Item types include rings, necklaces,
 bracelets and earrings. Categories are retained in saved records and backups
 and can be searched in Search.
 
-Scan an item opens the phone camera for one close-up photo and requests a
-broader item suggestion. Photograph one item clearly against a simple background.
-For an existing photo, tap Identify this item. The app asks whether the proposed
-type is right; confirm it, choose another suggestion, select from the dropdown
-or type your own name. Suggestions do not overwrite a name without selection.
-Stop reading cancels the reader. It suggests types, not gold purity, authenticity,
-monetary value, model details or a guaranteed identification of every object.
+An item photo is now optional. If a photo is present, Suggest item type can ask
+the lightweight household detector for a broad type such as television or fridge.
+It does not identify brand, model, serial number, authenticity or value. The user
+must accept a suggestion before it changes the item name.
 
-The broader reader downloads a roughly 150 MB quantised CLIP model plus browser
-runtime on first use. Use Wi-Fi. Image reading runs on device; photos are not
-sent to a vision server. The browser may cache model files, but successful
-offline recognition is not guaranteed. Low-memory devices may need the manual
-choices. This focused reader is separate from the existing live room detector;
-that room detector retains its narrower object classes.
+Camera assist is separate from Add Item and remains optional. Its detector runs
+on device after its browser model has loaded. Low-memory devices can ignore the
+camera helper entirely and use manual entry.
 
 Tap Speak beside a name, search or notes field. Allow microphone access if
 requested, speak briefly, check the transcript and tap Use these words. English

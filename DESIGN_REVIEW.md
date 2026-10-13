@@ -1,3 +1,25 @@
+# HomeScan 2.9.0 — Add Item first
+
+The primary item workflow is now manual-first. A room opens on **Items**, not the
+camera helper, and the primary action is **+ Add Item**. Step 1 asks for the item
+name/category/optional brand before any camera action. The item can be saved immediately from Quick Add; item photos are optional.
+
+Product-label reading remains available in Step 2 as **Read product label**, but
+it is assistance rather than authority. OCR results are presented as suggestions;
+no brand, model or serial value is written to the item until the user explicitly
+chooses **Use** or **Use all detected details**. Unknown values stay blank. The
+review checkbox no longer requires a photograph.
+
+The old **Scan an item** camera-launch path is removed from the visible UI. The
+live room detector remains only as an optional **Camera assist** tab. The existing
+broad photo-type suggestion is also secondary and is described accurately as a
+broad type suggestion rather than brand/model identification.
+
+The label reader now recognises Sky as a known manufacturer, rejects an all-zero
+serial placeholder such as `000`, uses a larger label image for analysis, and
+starts with Tesseract sparse-text mode with a fallback pass only when no key field
+was found.
+
 # HomeScan 2.8.0 save-integrity update
 
 Items are now persisted to their room at item-save time and during room autosave. Documents provide direct camera photo, enhanced document scan, and file/PDF selection.
