@@ -1,4 +1,4 @@
-# HomeScan 2.3: the household app
+# HomeScan 2.4: the household app
 
 ## Product structure
 
@@ -111,7 +111,7 @@ exercise extraction, preservation, storage and failure behaviour. Physical
 phone photographs and Safari memory/performance still need device validation.
 
 
-## Easier entry and sound correction (2.3)
+## Easier entry and sound correction (2.4)
 
 The owner's feedback was that sound was heard only at its toggle and that
 existing data should be offered in dropdowns. Ordinary button/selection cues
@@ -126,7 +126,7 @@ serial, documents and dates. Conflicting existing product details require a
 choice before replacement. Contextual prompts explain the next useful action.
 
 
-## Family memories (2.3)
+## Family memories (2.4)
 
 A fifth main destination adds everyday photos/videos and occasion albums. Home
 has a direct entry; shared search includes home records and memories. Metadata
@@ -151,3 +151,37 @@ Browser testing validates media persistence and byte-for-byte backup recovery,
 search, editing, playback, sharing payloads and fallbacks. The native share menu
 is simulated in tests; recipient delivery and physical iPhone behaviour remain
 external validation. File-format playback depends on device/browser support.
+
+
+## Broader item capture and voice (2.4)
+
+A grouped household taxonomy covers jewellery, clothing, personal-care items,
+bedding, electronics, furniture, tools, travel/sport and more. Category is a
+bounded string in the item schema, compatible with older records and preserved
+in JSON backup/restore. User-defined category names remain possible. School,
+faith and wellbeing contexts are owner-assigned, not inferred personal facts.
+
+The focused close-up reader uses Transformers.js 2.17.2 and quantised
+Xenova/clip-vit-base-patch32 inside a cancellable worker. It first selects broad
+visual groups, then proposes types within the closest groups. The live COCO
+room detector remains separate. The UI shows the source photo and requires
+explicit acceptance or correction; relative model scores are not exposed as
+accuracy probabilities. No claim is made about jewellery material, authenticity
+or value. Worker termination cancels late results and frees its model memory.
+Label reading and the broader reader do not intentionally run together.
+
+Voice entry uses feature-detected SpeechRecognition/webkitSpeechRecognition.
+Only a reviewed final transcript is applied; interim text cannot be selected.
+Typed changes during recognition are protected by confirmation. Detached forms,
+closing and backgrounding abort recognition. Permission/service failures offer
+keyboard input. Browser speech services may require network and process audio
+remotely; on-device dictation is not promised.
+
+Physical iPhone performance and real microphone recognition remain device
+validation requirements. Browser tests with controlled speech events verify
+UI handling, not speech accuracy. The broader model is materially larger than
+the original room model; this first download is explained in the product.
+
+After saving item details, the room opens Check items. Room save controls are
+placed outside the animated content so they stay reachable above navigation.
+Saving shows progress and prevents duplicate actions until the write finishes.

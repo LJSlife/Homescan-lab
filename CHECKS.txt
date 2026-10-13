@@ -1,4 +1,4 @@
-HomeScan 2.3 — verification completed 12 October 2026
+HomeScan 2.4 — verification completed 12 October 2026
 
 27 automated core/detection tests passed:
 - Complete backup/restore with item photos, label photos, metadata and PDFs.
@@ -52,13 +52,13 @@ Experience checks:
 - Device reduced-motion preference disables decorative motion; overrides persist.
 - Home and More layouts checked at 320, 390 and 768 px.
 
-2.3 checks: browser journeys cover normal-action audio, suspended-context
+2.4 checks: browser journeys cover normal-action audio, suspended-context
 resume, mute and persisted preferences; saved/common/custom dropdowns; model
 filtering; product reuse with serial/photo protection; saving and phone layouts.
 The real OCR browser regression also passes. Physical Safari sound still needs
 confirmation on the owner's device; an interrupted state is handled in code.
 
-2.3 family memories checks:
+2.4 family memories checks:
 - Real browser batch import of two PNG originals and a playable WebM video.
 - Metadata, albums, search by caption/person and shared search; edit persistence.
 - Multi-file share payload retains original files/types; cancel and unavailable
@@ -69,3 +69,21 @@ confirmation on the owner's device; an interrupted state is handled in code.
 - No cloud sync, recipient delivery or real iPhone validation is claimed.
 - Simulated memories storage failure retains the import form, shows failure,
   enables retry and leaves saved memories unchanged.
+
+2.4 broader capture and voice checks:
+- Jewellery and wider taxonomy; category saved, backed up, restored and searched.
+- Actual browser CLIP/WASM used with real ring/necklace photographs. Results
+  require user confirmation/correction; this small fixture set is not a measured
+  recognition benchmark. Fixture photos are internal, not part of the app.
+- Voice UI checks use controlled SpeechRecognition events: en-IE requested,
+  final transcript reviewed before applying, interim text cannot be applied,
+  permission failure, stop/close cancellation and keyboard fallback.
+- Normal home-record browser regression and actual OCR regression pass.
+- Physical iPhone recognition performance and live speech accuracy not verified.
+- Stop reading preserves a manually selected name; a deliberately late reader
+  result cannot replace the correction or reopen a suggestion.
+- Photo-to-record flow returns to Check items. Room save actions remain outside
+  animated content, show save progress and block repeated pending actions.
+- Actual broad-reader flow tested with software rendering. With the test browser
+  software GPU enabled, click/focus failures occurred after inference; no claim of physical
+  iPhone graphics/performance validation is made.

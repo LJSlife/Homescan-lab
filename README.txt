@@ -1,11 +1,11 @@
-HomeScan 2.3 — Your home, remembered
+HomeScan 2.4 — Your home, remembered
 
 INSTALL ON YOUR EXISTING GITHUB PAGES SITE
-Extract this ZIP. Upload these TWELVE app files into the repository folder that
+Extract this ZIP. Upload these SIXTEEN app files into the repository folder that
 currently contains your HomeScan index.html. Replace matching files:
-index.html, styles.css, core.js, app.js, detection.js, labels.js, experience.js, memories.js, sw.js,
+index.html, styles.css, core.js, app.js, detection.js, labels.js, experience.js, memories.js, catalog.js, focused.js, focused-worker.js, voice.js, sw.js,
 manifest.webmanifest, icon-192.png, icon-512.png.
-Refresh your existing website. The footer should show HomeScan · 2.3.
+Refresh your existing website. The footer should show HomeScan · 2.4.
 If an old page remains, close HomeScan and reopen the website in Safari.
 No build command, account, paid service or server is needed.
 
@@ -83,7 +83,7 @@ found items and saved records have soft sound cues. Toggle sound in the header,
 or use More to adjust sound and animation. Animation follows your device
 settings by default, including reduced motion. Browser sound permissions apply.
 
-EASIER ENTRY IN 2.3
+EASIER ENTRY IN 2.4
 Choose room/item names from recorded values or common household choices.
 Choose a brand and models previously recorded for that brand. Something else
 lets you enter a custom value. Search also offers recorded item names.
@@ -118,3 +118,35 @@ There are TWO backups: the existing home-records JSON and the new memories
 there is no cloud backup, family-account access or cross-device synchronisation
 in this build. Clearing website data can remove them. This local app must not
 be used as your only copy of important memories.
+
+EXPANDED ITEM TYPES AND VOICE (2.4)
+Choose a category such as Jewellery, Electronics, Clothes & footwear, Bedding,
+Beauty, Car & tools, School/university/work or Travel/sport/recreation. Saved
+custom categories are also offered. Item types include rings, necklaces,
+bracelets and earrings. Categories are retained in saved records and backups
+and can be searched in Search.
+
+Scan an item opens the phone camera for one close-up photo and requests a
+broader item suggestion. Photograph one item clearly against a simple background.
+For an existing photo, tap Identify this item. The app asks whether the proposed
+type is right; confirm it, choose another suggestion, select from the dropdown
+or type your own name. Suggestions do not overwrite a name without selection.
+Stop reading cancels the reader. It suggests types, not gold purity, authenticity,
+monetary value, model details or a guaranteed identification of every object.
+
+The broader reader downloads a roughly 150 MB quantised CLIP model plus browser
+runtime on first use. Use Wi-Fi. Image reading runs on device; photos are not
+sent to a vision server. The browser may cache model files, but successful
+offline recognition is not guaranteed. Low-memory devices may need the manual
+choices. This focused reader is separate from the existing live room detector;
+that room detector retains its narrower object classes.
+
+Tap Speak beside a name, search or notes field. Allow microphone access if
+requested, speak briefly, check the transcript and tap Use these words. English
+(Ireland) is requested. Existing text is replaced only when you apply the
+transcript. If you typed while listening, replacement asks for confirmation.
+Stop/close cancels listening. Some browsers do not offer speech recognition;
+the app directs you to your phone keyboard microphone instead. Your browser
+may use an online speech service. Check spoken model/serial details carefully.
+
+Choose a category first to narrow the item dropdown to relevant types.
