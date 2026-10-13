@@ -1,4 +1,4 @@
-HomeScan 2.6.3 — Activate the Gmail connection
+HomeScan 2.7.1 — Activate the Gmail connection
 
 STATUS
 Normal Email screens now show a clear activation-pending state and simple

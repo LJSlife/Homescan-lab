@@ -1,4 +1,35 @@
-HomeScan 2.6.3 — verification updated 13 October 2026
+HomeScan 2.7.1 — verification update 13 October 2026
+
+2.7.1 maintenance correction:
+- Brand / manufacturer entry now uses the neutral placeholder “Enter manufacturer name”.
+- Samsung remains only as a supported/tested manufacturer where appropriate; it is not a default appliance brand.
+- Runtime/cache version advanced to 2.7.1 so the corrected field is fetched by installed browsers/PWAs.
+
+2.7.0 guided-item verification:
+- JavaScript syntax checks pass for every supplied .js file.
+- Chromium runtime smoke testing reached Home, created a Kitchen, opened the
+  three-step item wizard, selected Fridge, entered product details, reviewed the
+  record and saved it. Wizard steps 1–3 were also checked at 320, 390 and 768 px
+  widths with no horizontal overflow.
+- Controlled OCR integration filled Samsung / RB34T602ESA / 01234567 from a
+  label-reading fixture and displayed those values in Review.
+- Controlled quick-identification integration mapped a refrigerator detection to
+  Fridge and advanced to the Product details step after explicit confirmation.
+- A deliberately slow label-reader fixture left Next enabled; continuing cancelled
+  the read and reached Review rather than trapping the user.
+- Samsung, Bosch and LG refrigerator-label parser fixtures retained leading zeros
+  and model punctuation.
+- The primary Scan an item path contains no call to the 150 MB focused CLIP reader.
+- The invalid decorative spark SVG path found during smoke testing was corrected.
+- Direct local/file browser navigation is blocked by this build environment, so the
+  runtime checks used an injected DOM with the production scripts. IndexedDB item
+  recovery could therefore not be exercised end-to-end in that browser context;
+  its code path is syntax/static checked and still requires deployment/iPhone test.
+- Physical iPhone/Safari camera capture, real COCO recognition speed, real Tesseract
+  label reading and interruption/relaunch recovery remain device-validation items.
+
+The detailed regression results below are the retained 2.6.3/earlier verification
+history. They have not all been re-run after the 2.7.0 item-entry UI change.
 
 27 automated core/detection tests passed:
 - Complete backup/restore with item photos, label photos, metadata and PDFs.

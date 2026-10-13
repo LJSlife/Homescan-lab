@@ -1,4 +1,4 @@
-# HomeScan 2.6.3: the household app
+# HomeScan 2.7.0: the household app
 
 ## Product structure
 
@@ -26,6 +26,39 @@ Manuals & care, and Documents. Photo evidence comes before confirmation.
 7. Save the room. Reopening and saving updates that same record. Interrupted
    work is kept as a draft and can be resumed.
 8. Search records, download a photo report, or make a complete restorable backup.
+
+
+## Guided item capture (2.7.0)
+
+Owner testing found the previous item editor too dense and the Scan an item path
+unsuitable for ordinary phone use. The old primary flow could start the roughly
+150 MB CLIP reader before the user had reached the product-label step. The earlier
+verification notes also recorded click/focus problems after broader inference in
+a software-rendered browser. That is not proof of the reported phone freeze, but
+it is a credible risk factor and the default flow no longer depends on it.
+
+The Item tab is now a three-step wizard: Item, Product details, Review. Step 1
+captures one photo and uses the lighter existing COCO-SSD household detector for
+a quick suggestion. The user must confirm or choose the item name. Step 2 makes
+the product-label photograph the primary action and automatically starts the
+existing Tesseract label reader. Brand, model and serial remain editable and are
+never treated as verified solely because OCR returned text. Fridge/freezer copy
+explicitly explains common label locations. Step 3 gives one compact review before
+saving. Manuals, care and documents remain separate tabs rather than blocking the
+core capture flow.
+
+Reader tasks are escapable. A slow label read can be stopped, the user can move
+to Review without waiting, and Save item cancels any outstanding reader instead
+of disabling the final action. Label images are resized to 1600 px rather than
+2000 px before OCR to reduce phone memory pressure. Item edits are also written to
+a separate IndexedDB recovery record while a room is being edited; this record is
+removed after a successful item save or an intentional discard. It is not added
+to exported household backups and does not change the backup schema.
+
+The packaged focused CLIP reader is retained for compatibility/history but is not
+invoked by the 2.7.0 primary item-entry UI. No claim is made that the lighter
+detector can identify every object. Manual item selection remains the guaranteed
+fallback.
 
 ## Storage and migration
 
@@ -187,7 +220,7 @@ After saving item details, the room opens Check items. Room save controls are
 placed outside the animated content so they stay reachable above navigation.
 Saving shows progress and prevents duplicate actions until the write finishes.
 
-## Email addition (2.6.3)
+## Email addition (2.7.0)
 
 Email is a separate Gmail-connected area. Three familiar tasks: catch up on
 Inbox, find Attachments, Write. Each summary has an envelope link to the original
@@ -219,7 +252,7 @@ Google registration, real mailbox access/delivery and iPhone link routing remain
 unverified. Summaries are extractive; outgoing file attachments, merged multi-
 mailbox inboxes, send-as aliases, background checking and cloud sync are absent.
 
-## Consumer connection flow repair (2.6.3)
+## Consumer connection flow repair (2.7.0)
 
 App-owner registration has moved to email-owner.html. Consumer screens never
 ask for OAuth configuration and have explicit unregistered, preparing, ready,
@@ -235,7 +268,7 @@ The owner has supplied a Google Web client ID. Remaining Google project settings
 and actual consent, original-link routing and delivery must be tested. Public launch
 requires the applicable Google verification and accurate owner/support details.
 
-## Connection configuration 2.6.3
+## Connection configuration 2.7.0
 The owner-supplied public Web client ID is configured centrally. Asset/cache
 versions were advanced so the deployed app requests this configuration. Real
 Gmail authentication and mailbox operations have not yet been verified.

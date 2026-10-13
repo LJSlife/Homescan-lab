@@ -1,11 +1,11 @@
-HomeScan 2.6.3 — Your home, remembered
+HomeScan 2.7.1 — Your home, remembered
 
 INSTALL ON YOUR EXISTING GITHUB PAGES SITE
 Extract this ZIP. Upload these TWENTY app files into the repository folder that
 currently contains your HomeScan index.html. Replace matching files:
 index.html, styles.css, core.js, app.js, detection.js, labels.js, experience.js, memories.js, catalog.js, focused.js, focused-worker.js, voice.js, email.js, email-config.js, sw.js,
 manifest.webmanifest, icon-192.png, icon-512.png, email-owner.html, privacy.html.
-Refresh your existing website. The footer should show HomeScan · 2.6.3.
+Refresh your existing website. The footer should show HomeScan · 2.7.1.
 If an old page remains, close HomeScan and reopen the website in Safari.
 Home records need no build command, paid service or server. The optional Email
 section needs your Gmail account and one-time Google Web OAuth setup; read
@@ -25,6 +25,24 @@ backup, restore a backup, and download a photo report.
 IN A ROOM
 Use Scan room for camera suggestions, or add your own item with a photo.
 Use Check items to inspect each photograph and correct names/quantities.
+
+GUIDED ITEM ENTRY IN 2.7.1
+Scan an item now follows three clear steps:
+  1. Item — take one photo and confirm what the item is.
+  2. Product details — photograph the maker/product label. HomeScan reads the
+     brand, model and serial number into the form where possible.
+  3. Review — check the record and save it.
+For a fridge or freezer, the app tells you where the product label is commonly
+found. The main item photo identifies the object; the product-label photo is the
+one used to read model and serial information. If a reader is slow, you can stop
+it or continue without waiting and finish the fields manually.
+
+The primary Scan an item path no longer starts the roughly 150 MB broader CLIP
+reader. It uses the lighter household-object detector for a quick suggestion,
+then moves to the label step. This reduces memory pressure on phones and avoids
+locking the user into a long recognition task. An unfinished item is also written
+to a local recovery record while you work when IndexedDB storage is available.
+
 Open Details & information for the full item record:
   Item — photo, name, quantity, brand, model, serial and product-label photo.
   Manuals & care — exact-model lookup, saved links, warranty and care dates.
@@ -85,15 +103,14 @@ found items and saved records have soft sound cues. Toggle sound in the header,
 or use More to adjust sound and animation. Animation follows your device
 settings by default, including reduced motion. Browser sound permissions apply.
 
-EASIER ENTRY IN 2.4
-Choose room/item names from recorded values or common household choices.
-Choose a brand and models previously recorded for that brand. Something else
-lets you enter a custom value. Search also offers recorded item names.
-Use details from a product already recorded copies its name, brand, model and
-information links; photos, serial numbers, receipts and dates remain separate.
-Prompts guide you towards an item name, photo and optional label scan.
-Sound now includes ordinary taps and selections, with automatic resume after
-an audio interruption. Mute still applies to every cue.
+EASIER ENTRY
+Room and item names can still be chosen from recorded values or common household
+choices, with custom text available when needed. Product details from a previously
+recorded model can still be reused from the Product details step; the current
+physical item's photo and serial number remain separate. The 2.7.0 wizard replaces
+the older long item form so the user sees only the fields needed for the current
+step. Sound still includes ordinary taps and selections, with mute applying to
+every cue.
 
 FAMILY MEMORIES
 Open Memories to add several original photos/videos together. Choose an album
@@ -153,7 +170,7 @@ may use an online speech service. Check spoken model/serial details carefully.
 
 Choose a category first to narrow the item dropdown to relevant types.
 
-EMAIL (2.6.3)
+EMAIL (2.7.0)
 Open email from Home or More. Filtered inbox summaries, original-email links,
 searchable saved attachments/backups, recipient dropdowns, account-specific
 local drafts and voice-assisted composing are included. Each send requires
@@ -162,7 +179,7 @@ EMAIL_SETUP.txt for activation, limits and checks. Summaries select key
 sentences on this device, not AI-generated interpretations. Email attachments
 have their own backup; household/memories backups do not include them.
 
-GMAIL ACTIVATION FLOW (2.6.3)
+GMAIL ACTIVATION FLOW (2.7.0)
 Ordinary users see a simple Connect Gmail flow with no developer fields.
 If app registration is absent, the screen clearly says activation is pending.
 The app owner uses email-owner.html once to register the app with Google and
