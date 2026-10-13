@@ -1,13 +1,15 @@
-HomeScan 2.4 — Your home, remembered
+HomeScan 2.5 — Your home, remembered
 
 INSTALL ON YOUR EXISTING GITHUB PAGES SITE
-Extract this ZIP. Upload these SIXTEEN app files into the repository folder that
+Extract this ZIP. Upload these EIGHTEEN app files into the repository folder that
 currently contains your HomeScan index.html. Replace matching files:
-index.html, styles.css, core.js, app.js, detection.js, labels.js, experience.js, memories.js, catalog.js, focused.js, focused-worker.js, voice.js, sw.js,
+index.html, styles.css, core.js, app.js, detection.js, labels.js, experience.js, memories.js, catalog.js, focused.js, focused-worker.js, voice.js, email.js, email-config.js, sw.js,
 manifest.webmanifest, icon-192.png, icon-512.png.
-Refresh your existing website. The footer should show HomeScan · 2.4.
+Refresh your existing website. The footer should show HomeScan · 2.5.
 If an old page remains, close HomeScan and reopen the website in Safari.
-No build command, account, paid service or server is needed.
+Home records need no build command, paid service or server. The optional Email
+section needs your Gmail account and one-time Google Web OAuth setup; read
+EMAIL_SETUP.txt. Gmail is not activated by uploading this ZIP alone.
 
 Existing HomeScan room records on the SAME site address and browser are
 imported automatically. Old storage is left intact during that migration.
@@ -83,7 +85,7 @@ found items and saved records have soft sound cues. Toggle sound in the header,
 or use More to adjust sound and animation. Animation follows your device
 settings by default, including reduced motion. Browser sound permissions apply.
 
-EASIER ENTRY IN 2.4
+EASIER ENTRY IN 2.5
 Choose room/item names from recorded values or common household choices.
 Choose a brand and models previously recorded for that brand. Something else
 lets you enter a custom value. Search also offers recorded item names.
@@ -113,13 +115,13 @@ Restore memories verifies its media checksums before importing anything.
 Existing memories are kept; identical records are skipped and changed records
 are retained as copies. Remove selected has an immediate Undo action.
 
-There are TWO backups: the existing home-records JSON and the new memories
+For household records there are TWO backups: the existing home-records JSON and the new memories
 .hsm file. Keep both outside this browser. Family memories stay on this device;
 there is no cloud backup, family-account access or cross-device synchronisation
 in this build. Clearing website data can remove them. This local app must not
 be used as your only copy of important memories.
 
-EXPANDED ITEM TYPES AND VOICE (2.4)
+EXPANDED ITEM TYPES AND VOICE (2.5)
 Choose a category such as Jewellery, Electronics, Clothes & footwear, Bedding,
 Beauty, Car & tools, School/university/work or Travel/sport/recreation. Saved
 custom categories are also offered. Item types include rings, necklaces,
@@ -150,3 +152,12 @@ the app directs you to your phone keyboard microphone instead. Your browser
 may use an online speech service. Check spoken model/serial details carefully.
 
 Choose a category first to narrow the item dropdown to relevant types.
+
+EMAIL (2.5)
+Open email from Home or More. Filtered inbox summaries, original-email links,
+searchable saved attachments/backups, recipient dropdowns, account-specific
+local drafts and voice-assisted composing are included. Each send requires
+review. The Gmail connection needs one-time Google registration; see
+EMAIL_SETUP.txt for activation, limits and checks. Summaries select key
+sentences on this device, not AI-generated interpretations. Email attachments
+have their own backup; household/memories backups do not include them.

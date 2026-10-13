@@ -1,0 +1,100 @@
+HomeScan 2.5 — Activate the Gmail connection
+
+STATUS
+The email code is included; live Gmail remains inactive until a Google Web
+OAuth client ID is configured. ChatGPT's connected Gmail cannot be reused by
+this website. Do not enter a Google password, client secret or API key into
+HomeScan. A Web client ID is public and safe to include in email-config.js.
+
+ONE-TIME OWNER SETUP
+1. In https://console.cloud.google.com create/select a project.
+2. Enable Gmail API and People API under APIs & Services > Library.
+3. Configure Google Auth Platform branding, audience and data access. For
+   personal testing, use External/Testing and add your Gmail address as a test
+   user. Supply genuine app/support details requested by Google.
+4. Create an OAuth client of type Web application. Add the website ORIGIN as
+   an authorised JavaScript origin, e.g. https://ljslife.github.io (no path).
+   For a local test add http://localhost:PORT separately. Use HTTPS when hosted.
+   The Google Identity Services popup token flow needs no redirect URI.
+5. Add the following data-access scopes:
+   https://www.googleapis.com/auth/gmail.readonly
+   https://www.googleapis.com/auth/gmail.send
+   https://www.googleapis.com/auth/contacts.readonly
+   https://www.googleapis.com/auth/contacts.other.readonly
+6. Copy the client ID ending in .apps.googleusercontent.com into clientId in
+   email-config.js and upload the updated file. Alternatively, enter that
+   public client ID under Email > Connection help on each device.
+7. Open the app in Safari, Open email > Connect Gmail, select your account
+   and grant read permission. Then Check inbox. Sending and contacts request
+   additional permissions only when used. Check Gmail Sent after your first
+   explicitly reviewed send. No real email was sent during development.
+
+Testing users may see an unverified-app warning. Do not release publicly on
+the assumption that personal testing is production approval. Gmail read access
+is a restricted scope. Public release needs the applicable Google verification,
+privacy policy and any assessment Google requires for the architecture. Consult
+Google's current policy and console guidance before broader distribution.
+
+USING EMAIL
+Open email from Home or More. Check inbox loads 20 messages at a time; Load more
+continues. Default: unread inbox, excluding Google-classified Social, Spam and
+Trash. Recent inbox shows the past 30 days. Include-social option still excludes
+Spam and Trash. Promotions are retained, because receipts/delivery emails can
+be useful. Gmail's classification can be imperfect. Checking never marks read.
+
+Summaries select up to three key sentences on this device; they are extractive,
+not an AI interpretation or a guarantee all important details were captured.
+HTML is converted to plain text and rendered escaped; scripts, remote images
+and tracking pixels are not displayed. Email content cannot invoke app actions.
+Tap the envelope/Original link to open that thread in Gmail for the selected
+account. Mobile Gmail/browser routing depends on your device; confirm it on
+Safari once the Google connection is active.
+
+Keep attachment saves original bytes in this browser. Optional automatic keeping
+applies to messages loaded in the check, not every message in the mailbox.
+Limits: 10 MB each, 50 MB saved per account. Skipped/failed saves are reported.
+Larger files stay accessible from the original email. Find attachments by file
+name, sender or subject; download originals without rendering executable files.
+Attachment backups include files and message metadata with SHA-256 verification.
+Restore requires the same selected Gmail account and imports atomically after
+validating every file. Home and Memories backups do NOT include email attachments.
+Keep all applicable backups outside the browser. Removing a saved attachment
+never deletes it from Gmail. Clearing website data removes local files/drafts.
+
+Write: choose a recipient from a searchable dropdown or type a new address.
+Update Google contacts loads all paginated Contacts and Other contacts that
+Google exposes. Google does not expose every address ever seen in Gmail as a
+single universal list. The app also offers senders of checked emails. Multiple
+independent Gmail mailboxes are connected separately through Switch account;
+this version does not combine mailboxes or import Gmail send-as aliases.
+
+To, Cc, Bcc, Subject and message support Speak. Review the transcript first,
+particularly spelled email addresses. English (Ireland) is requested. Browser
+speech recognition may use an online service; unavailable browsers can use the
+phone keyboard microphone. Dictation replaces the selected field when accepted.
+
+Drafts save per account locally. Review email shows exact recipients/subject/body.
+Send this email is the explicit send action. If sending permission is newly
+requested, review again afterwards. There is no automatic or voice-triggered
+sending. There is no outbound attachment picker in this version. If a send's
+response is lost, the app blocks another send of that draft: check Gmail Sent
+before starting a new email. Confirmed send clears the local draft.
+
+Access tokens stay in memory, expire and are not backed up. Disconnect stops
+local API access, retaining saved files/drafts. To revoke Google's underlying
+grant, use https://myaccount.google.com/connections. Reconnect after a reload or
+expiry. This version checks while the app is open, not in the background.
+Attachments/drafts on a shared device are not protected by an app login. Use
+your own device/account. No server, cloud attachment backup or cross-device
+email draft sync is provided. Inbox text is fetched from Google, not sent to
+an AI summarisation provider. The Google API permissions remain account-wide;
+filtering limits what this app fetches, not the permissions Google grants.
+
+PRIMARY DOCUMENTATION
+https://developers.google.com/identity/oauth2/web/guides/use-token-model
+https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid
+https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.messages/list
+https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.messages/send
+https://developers.google.com/people/api/rest/v1/people.connections/list
+https://developers.google.com/people/api/rest/v1/otherContacts/list
+https://developers.google.com/workspace/gmail/api/auth/scopes

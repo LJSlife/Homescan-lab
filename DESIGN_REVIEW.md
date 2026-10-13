@@ -1,4 +1,4 @@
-# HomeScan 2.4: the household app
+# HomeScan 2.5: the household app
 
 ## Product structure
 
@@ -7,7 +7,8 @@ contain rooms; rooms contain photographed items. Each item can hold its
 identity, useful documents and information links. The scanner is one capture
 method, alongside taking or choosing a photo.
 
-The four main destinations are Home, Rooms, Search and More. The room
+The five main destinations are Home, Rooms, Memories, Search and More. Email
+is reachable from Home and More to avoid crowding the phone navigation. The room
 workspace separates scanning from checking. Item details are split into Item,
 Manuals & care, and Documents. Photo evidence comes before confirmation.
 
@@ -111,7 +112,7 @@ exercise extraction, preservation, storage and failure behaviour. Physical
 phone photographs and Safari memory/performance still need device validation.
 
 
-## Easier entry and sound correction (2.4)
+## Easier entry and sound correction (2.5)
 
 The owner's feedback was that sound was heard only at its toggle and that
 existing data should be offered in dropdowns. Ordinary button/selection cues
@@ -126,7 +127,7 @@ serial, documents and dates. Conflicting existing product details require a
 choice before replacement. Contextual prompts explain the next useful action.
 
 
-## Family memories (2.4)
+## Family memories (2.5)
 
 A fifth main destination adds everyday photos/videos and occasion albums. Home
 has a direct entry; shared search includes home records and memories. Metadata
@@ -153,7 +154,7 @@ is simulated in tests; recipient delivery and physical iPhone behaviour remain
 external validation. File-format playback depends on device/browser support.
 
 
-## Broader item capture and voice (2.4)
+## Broader item capture and voice (2.5)
 
 A grouped household taxonomy covers jewellery, clothing, personal-care items,
 bedding, electronics, furniture, tools, travel/sport and more. Category is a
@@ -185,3 +186,35 @@ the original room model; this first download is explained in the product.
 After saving item details, the room opens Check items. Room save controls are
 placed outside the animated content so they stay reachable above navigation.
 Saving shows progress and prevents duplicate actions until the write finishes.
+
+## Email addition (2.5)
+
+Email is a separate Gmail-connected area. Three familiar tasks: catch up on
+Inbox, find Attachments, Write. Each summary has an envelope link to the original
+thread. Default inbox filtering excludes Google Social/Spam/Trash but retains
+receipts and promotions. Only foreground checks happen, 20 messages per page.
+Summaries select key sentences locally and preserve short numeric amounts.
+
+Google Identity Services requests read permission first, contacts and send
+permission as used. Tokens remain in memory and API calls go directly to Google;
+no server, secret or ChatGPT connector token is used. Client registration remains
+an external setup prerequisite, honestly stated in the app and EMAIL_SETUP.txt.
+Public launch requires Google's applicable verification, not just a client ID.
+
+Email HTML never enters the live DOM. Resource tags are removed before entity
+text decoding; no tracking pixels or executable attachment previews are loaded.
+Original attachment bytes and per-account drafts/contacts use separate IndexedDB
+storage. Attachment limits and backup integrity checks prevent unlimited local
+imports and partial restores. Each account's local records remain independent.
+
+Recipient fields use searchable dropdowns and also allow new addresses. Voice
+entry follows the existing review-before-apply flow. Sending requires an explicit
+message review and send tap. A locally persisted uncertain-delivery flag precedes
+POST so loss of the response/reload cannot cause an automatic retry. Owner checks
+Gmail Sent before clearing that flag. Client code cannot guarantee exactly-once
+email delivery over a lost network; the UI states this rather than retrying.
+
+This build's Email tests use simulated OAuth/API responses in a real browser;
+Google registration, real mailbox access/delivery and iPhone link routing remain
+unverified. Summaries are extractive; outgoing file attachments, merged multi-
+mailbox inboxes, send-as aliases, background checking and cloud sync are absent.

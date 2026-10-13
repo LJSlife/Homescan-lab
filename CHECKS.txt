@@ -1,4 +1,4 @@
-HomeScan 2.4 — verification completed 12 October 2026
+HomeScan 2.5 — verification updated 13 October 2026
 
 27 automated core/detection tests passed:
 - Complete backup/restore with item photos, label photos, metadata and PDFs.
@@ -52,7 +52,7 @@ Experience checks:
 - Device reduced-motion preference disables decorative motion; overrides persist.
 - Home and More layouts checked at 320, 390 and 768 px.
 
-2.4 checks: browser journeys cover normal-action audio, suspended-context
+2.5 checks: browser journeys cover normal-action audio, suspended-context
 resume, mute and persisted preferences; saved/common/custom dropdowns; model
 filtering; product reuse with serial/photo protection; saving and phone layouts.
 The real OCR browser regression also passes. Physical Safari sound still needs
@@ -87,3 +87,25 @@ confirmation on the owner's device; an interrupted state is handled in code.
 - Actual broad-reader flow tested with software rendering. With the test browser
   software GPU enabled, click/focus failures occurred after inference; no claim of physical
   iPhone graphics/performance validation is made.
+
+2.5 Email checks (13 October 2026):
+- Real Chromium UI with controlled Google OAuth/Gmail/People API responses.
+- Default unread/non-social/non-spam query, load-more pagination, original links.
+- MIME body decoding, UTF-8 text and summaries preserving short monetary totals.
+- HTML/script text cannot execute and no remote tracking image requests occur.
+- Attachment original-byte downloads, automatic keeping, filename search,
+  SHA-256 backup checks, atomic restore and damaged-backup rejection.
+- Paginated Google Contacts plus Other contacts and observed sender suggestions.
+- Voice transcript reviewed/applied to message; exact review before sending.
+- Incremental sending permission requires another review, UTF-8 subject/body MIME,
+  recipient-header injection rejection, confirmed send and draft clearance.
+- An aborted send blocks retry until the owner checks Gmail Sent and resets draft.
+- Separate account files, contacts and drafts; account switching and local reload.
+- Saved attachments and drafts remain available offline after disconnect.
+- Denied Google consent has a clear state; no false connected/sent claim.
+- Inbox/attachment/compose layouts fit 320, 390 and 768 px widths.
+- Existing 38 core/detection/label tests and household/browser regressions passed.
+- No live Gmail inbox was read and no real email was sent during these tests.
+- Live OAuth client registration, Google consent/verification, real Gmail mobile
+  thread routing and physical iPhone voice remain unverified pending activation.
+- Email uses on-device sentence selection, not a cloud AI interpretation.
