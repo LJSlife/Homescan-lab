@@ -1,4 +1,4 @@
-# HomeScan 2.6.2: the household app
+# HomeScan 2.6.3: the household app
 
 ## Product structure
 
@@ -187,7 +187,7 @@ After saving item details, the room opens Check items. Room save controls are
 placed outside the animated content so they stay reachable above navigation.
 Saving shows progress and prevents duplicate actions until the write finishes.
 
-## Email addition (2.6.2)
+## Email addition (2.6.3)
 
 Email is a separate Gmail-connected area. Three familiar tasks: catch up on
 Inbox, find Attachments, Write. Each summary has an envelope link to the original
@@ -219,7 +219,7 @@ Google registration, real mailbox access/delivery and iPhone link routing remain
 unverified. Summaries are extractive; outgoing file attachments, merged multi-
 mailbox inboxes, send-as aliases, background checking and cloud sync are absent.
 
-## Consumer connection flow repair (2.6.2)
+## Consumer connection flow repair (2.6.3)
 
 App-owner registration has moved to email-owner.html. Consumer screens never
 ask for OAuth configuration and have explicit unregistered, preparing, ready,
@@ -235,7 +235,7 @@ The owner has supplied a Google Web client ID. Remaining Google project settings
 and actual consent, original-link routing and delivery must be tested. Public launch
 requires the applicable Google verification and accurate owner/support details.
 
-## Connection configuration 2.6.2
+## Connection configuration 2.6.3
 The owner-supplied public Web client ID is configured centrally. Asset/cache
 versions were advanced so the deployed app requests this configuration. Real
 Gmail authentication and mailbox operations have not yet been verified.

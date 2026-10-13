@@ -1,4 +1,4 @@
-HomeScan 2.6.2 — Activate the Gmail connection
+HomeScan 2.6.3 — Activate the Gmail connection
 
 STATUS
 Normal Email screens now show a clear activation-pending state and simple
@@ -84,19 +84,23 @@ sending. There is no outbound attachment picker in this version. If a send's
 response is lost, the app blocks another send of that draft: check Gmail Sent
 before starting a new email. Confirmed send clears the local draft.
 
-Access tokens stay in memory, expire and are not backed up. HomeScan records only
-that a previously connected account should be resumed. When Email is opened again,
-it asks Google for a fresh short-lived access token using the existing grant and
-saved account hint. If Google can satisfy that request without interaction, the
-connection is restored automatically; otherwise the user taps Reconnect Gmail.
-Explicit Disconnect disables automatic resume while retaining saved files/drafts.
-To revoke Google's underlying grant, use https://myaccount.google.com/connections.
-This version checks while the app is open, not in the background. Attachments/drafts
-on a shared device are not protected by an app login. Use your own device/account.
-No server, cloud attachment backup or cross-device email draft sync is provided.
-Inbox text is fetched from Google, not sent to an AI summarisation provider. The
-Google API permissions remain account-wide; filtering limits what this app fetches,
-not the permissions Google grants.
+The current Google access token is stored in this app's local IndexedDB only so
+closing and reopening the PWA does not immediately force another Gmail connection.
+The stored token is a bearer credential and normally lasts about an hour; it is
+removed on Disconnect, expiry, or a Google 401 response. It is not included in
+HomeScan backups.
+
+This remains a browser-only OAuth token flow. Google's current documentation says
+a fresh access token after expiry must be requested from a user-driven action.
+HomeScan therefore preloads Google Identity Services and, when possible, uses the
+user's tap on Open email as that action to renew access using the already-saved
+account hint. Google may still display its authorization dialog. If the Google
+library is not ready at that instant, HomeScan shows Reconnect Gmail instead.
+
+A true long-lived 'connect once and stay connected across days without another
+Google authorization interaction' design requires Google's authorization-code
+flow plus a secure backend that stores a refresh token. GitHub Pages alone cannot
+securely provide that architecture.
 
 PRIMARY DOCUMENTATION
 https://developers.google.com/identity/oauth2/web/guides/use-token-model

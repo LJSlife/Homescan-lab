@@ -1,4 +1,4 @@
-HomeScan 2.6.2 — verification updated 13 October 2026
+HomeScan 2.6.3 — verification updated 13 October 2026
 
 27 automated core/detection tests passed:
 - Complete backup/restore with item photos, label photos, metadata and PDFs.
@@ -88,7 +88,7 @@ confirmation on the owner's device; an interrupted state is handled in code.
   software GPU enabled, click/focus failures occurred after inference; no claim of physical
   iPhone graphics/performance validation is made.
 
-2.6.2 Email checks (13 October 2026):
+2.6.3 Email checks (13 October 2026):
 - Real Chromium UI with controlled Google OAuth/Gmail/People API responses.
 - Default unread/non-social/non-spam query, load-more pagination, original links.
 - MIME body decoding, UTF-8 text and summaries preserving short monetary totals.
@@ -103,8 +103,8 @@ confirmation on the owner's device; an interrupted state is handled in code.
 - Separate account files, contacts and drafts; account switching and local reload.
 - Saved attachments and drafts remain available offline after disconnect.
 - Denied Google consent has a clear state; no false connected/sent claim.
-- 2.6.2 code path now remembers the prior account and attempts a no-prompt token request through Google Identity Services on Email re-entry; failure falls back to Reconnect Gmail.
-- 2.6.2 Explicit Disconnect disables that automatic reconnect attempt.
+- 2.6.3 code path now remembers the prior account and attempts a no-prompt token request through Google Identity Services on Email re-entry; failure falls back to Reconnect Gmail.
+- 2.6.3 Explicit Disconnect disables that automatic reconnect attempt.
 - Inbox/attachment/compose layouts fit 320, 390 and 768 px widths.
 - Existing 38 core/detection/label tests and household/browser regressions passed.
 - No live Gmail inbox was read and no real email was sent during these tests.
@@ -112,7 +112,7 @@ confirmation on the owner's device; an interrupted state is handled in code.
   thread routing and physical iPhone voice remain unverified pending activation.
 - Email uses on-device sentence selection, not a cloud AI interpretation.
 
-2.6.2 connection UX checks:
+2.6.3 connection UX checks:
 - No client-ID entry or technical setup in normal Email/help screens.
 - Unregistered build clearly shows activation pending; no false Connect action.
 - Separate owner page rejects invalid ID and downloads a correctly named,
@@ -125,15 +125,22 @@ confirmation on the owner's device; an interrupted state is handled in code.
   live Gmail read/delivery and public verification remain incomplete. UI and
   fixture tests cannot substitute for those remaining account-owner steps.
 
-2.6.2 public client configuration:
+2.6.3 public client configuration:
 - Exact supplied public client ID retained in email-config.js; valid JavaScript.
-- App/footer, asset URLs and service-worker cache use 2.6.2.
+- App/footer, asset URLs and service-worker cache use 2.6.3.
 - Package contains no client secret, password or Google access token.
 - Live site was still 2.5 with empty client configuration when checked.
 - Real Google consent, People API access and delivery remain to be tested.
 
-2.6.2 reconnect patch verification note:
+2.6.3 reconnect patch verification note:
 - JavaScript syntax checks passed for every supplied .js file after the patch.
 - Static checks confirm no Google access token is written to localStorage, IndexedDB or backup data.
 - The reconnect path uses prompt=none only for a previously connected account and preserves an explicit Disconnect choice.
 - A live browser journey could not be executed in this build environment because local browser navigation is blocked by the environment administrator. The deployed GitHub Pages build must therefore be verified once on the iPhone: connect Gmail, close/reopen, open Email, and confirm it restores without the full setup flow.
+
+2.6.3 Gmail persistence checks:
+- access token restored from IndexedDB only while unexpired
+- expiry/401/disconnect clears persisted token
+- Google Identity Services preloads during app init
+- expired-token renewal is only attempted from an active user gesture
+- no claim of silent refresh after token expiry

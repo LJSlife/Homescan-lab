@@ -1,11 +1,11 @@
-HomeScan 2.6.2 — Your home, remembered
+HomeScan 2.6.3 — Your home, remembered
 
 INSTALL ON YOUR EXISTING GITHUB PAGES SITE
 Extract this ZIP. Upload these TWENTY app files into the repository folder that
 currently contains your HomeScan index.html. Replace matching files:
 index.html, styles.css, core.js, app.js, detection.js, labels.js, experience.js, memories.js, catalog.js, focused.js, focused-worker.js, voice.js, email.js, email-config.js, sw.js,
 manifest.webmanifest, icon-192.png, icon-512.png, email-owner.html, privacy.html.
-Refresh your existing website. The footer should show HomeScan · 2.6.2.
+Refresh your existing website. The footer should show HomeScan · 2.6.3.
 If an old page remains, close HomeScan and reopen the website in Safari.
 Home records need no build command, paid service or server. The optional Email
 section needs your Gmail account and one-time Google Web OAuth setup; read
@@ -153,7 +153,7 @@ may use an online speech service. Check spoken model/serial details carefully.
 
 Choose a category first to narrow the item dropdown to relevant types.
 
-EMAIL (2.6.2)
+EMAIL (2.6.3)
 Open email from Home or More. Filtered inbox summaries, original-email links,
 searchable saved attachments/backups, recipient dropdowns, account-specific
 local drafts and voice-assisted composing are included. Each send requires
@@ -162,7 +162,7 @@ EMAIL_SETUP.txt for activation, limits and checks. Summaries select key
 sentences on this device, not AI-generated interpretations. Email attachments
 have their own backup; household/memories backups do not include them.
 
-GMAIL ACTIVATION FLOW (2.6.2)
+GMAIL ACTIVATION FLOW (2.6.3)
 Ordinary users see a simple Connect Gmail flow with no developer fields.
 If app registration is absent, the screen clearly says activation is pending.
 The app owner uses email-owner.html once to register the app with Google and
